@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public GameObject ball;
+    private SpriteRenderer ballRender;
     private double xPos;
     private double yPos;
     private Vector2 velocity;
@@ -15,6 +16,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ballRender = GetComponent<SpriteRenderer>();
         xPos = ball.transform.position.x;
         yPos = ball.transform.position.y;
         mass = 1;
@@ -22,7 +24,7 @@ public class Ball : MonoBehaviour
         color = new Color(0, 1, 0, 1);
         velocity = new Vector2(0,0);
         force = new Vector2(0, 0);
-
+        ballRender.color = color;
         
     }
 
@@ -30,5 +32,35 @@ public class Ball : MonoBehaviour
     void Update()
     {
         
+    }
+
+    //getter methods
+    public double getX()
+    {
+        return (xPos);
+    }
+    public double getY()
+    {
+        return (yPos);
+    }
+    public double getMass()
+    {
+        return (mass);
+    }
+    public double getRadius()
+    {
+        return (radius);
+    }
+    public Vector2 getVelocity()
+    {
+        return (velocity);
+    }
+    public Vector2 getForce()
+    {
+        return (force);
+    }
+    public Color getColor()
+    {
+        return (color);
     }
 }
