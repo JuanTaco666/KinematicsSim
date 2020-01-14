@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraSettings : MonoBehaviour
+public class CameraSettings : MonoBehaviour
 {
-    public Camera mainCamera;
-    public Camera otherCamera;
+    public Camera camera;
 
     private double cameraHeight;
     private double cameraWidth;
     // Start is called before the first frame update
     void Start()
     {
-        cameraHeight = mainCamera.orthographicSize * 2;
-        cameraWidth = mainCamera.aspect * cameraHeight;
-        mainCamera.enabled = true;
-        otherCamera.enabled = false;
+        cameraHeight = camera.orthographicSize * 2;
+        cameraWidth = camera.aspect * cameraHeight;
+        camera.enabled = true;
     }
 
     // Update is called once per frame
