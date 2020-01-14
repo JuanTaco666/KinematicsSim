@@ -5,14 +5,17 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public GameObject ball;
+    public GameObject vector;
+
+    private GameObject velocity;
     private SpriteRenderer ballRender;
-    private double xPos;
-    private double yPos;
-    private Vector2 velocity;
-    private double mass;
-    private Vector2 force;
-    private double radius;
     private Color color;
+    private Vector2 force;
+    private double mass;
+    private double radius;
+    private float xPos;
+    private float yPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,7 @@ public class Ball : MonoBehaviour
         mass = 1;
         radius = 5;
         color = new Color(0, 1, 0, 1);
-        velocity = new Vector2(0,0);
+        velocity = instantiateVector(new Vector2(1, 1), "velocity");
         force = new Vector2(0, 0);
         ballRender.color = color;
         
@@ -51,7 +54,7 @@ public class Ball : MonoBehaviour
     {
         return (radius);
     }
-    public Vector2 getVelocity()
+    public GameObject getVelocity()
     {
         return (velocity);
     }
@@ -62,5 +65,15 @@ public class Ball : MonoBehaviour
     public Color getColor()
     {
         return (color);
+    }
+
+    GameObject instantiateVector(Vector2 vector, string description) 
+    {
+        float angle = Vector2.Angle(new Vector2(1, 0), vector);
+        GameObject v = (GameObject)Instantiate(this.vector, new Vector3(xPos, yPos, 0), new Quaternion(0, 0, (float)1, 1));
+        v.GetComponent<Vector>().setVector2(vector);
+        v.GetComponent<Vector>().setObject(ball);
+
+        return v;
     }
 }
