@@ -10,7 +10,7 @@ public class Ball : MonoBehaviour
     private GameObject velocity;
     private SpriteRenderer ballRender;
     private Color color;
-    private Vector2 force;
+    private GameObject force;
     private double mass;
     private double radius;
     private float xPos;
@@ -26,7 +26,7 @@ public class Ball : MonoBehaviour
         radius = 5;
         color = new Color(0, 1, 0, 1);
         velocity = instantiateVector(new Vector2(1, 1), "velocity");
-        force = new Vector2(0, 0);
+        force = instantiateVector(new Vector2(1, 1), "force");
         ballRender.color = color;
         
     }
@@ -58,7 +58,7 @@ public class Ball : MonoBehaviour
     {
         return (velocity);
     }
-    public Vector2 getForce()
+    public GameObject getForce()
     {
         return (force);
     }
@@ -70,7 +70,7 @@ public class Ball : MonoBehaviour
     GameObject instantiateVector(Vector2 vector, string description) 
     {
         float angle = Vector2.Angle(new Vector2(1, 0), vector);
-        GameObject v = (GameObject)Instantiate(this.vector, new Vector3(xPos, yPos, 0), new Quaternion(0, 0, (float)1, 1));
+        GameObject v = (GameObject)Instantiate(this.vector, new Vector3(xPos, yPos, 0), new Quaternion(0, 0, (float)angle, 1));
         v.GetComponent<Vector>().setVector2(vector);
         v.GetComponent<Vector>().setObject(ball);
 

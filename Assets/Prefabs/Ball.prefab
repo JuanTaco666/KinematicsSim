@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4683678037334544933}
   - component: {fileID: 4683678037334544932}
   - component: {fileID: 7637701421610886538}
+  - component: {fileID: 7548577272009900155}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -112,3 +113,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 4683678037334544934}
   vector: {fileID: 2339244536730963515, guid: 17d8538e5531b4c4a8a53a3d66248008, type: 3}
+--- !u!50 &7548577272009900155
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683678037334544934}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 8be6341e1ce3f4cec9902bc34f72d20a, type: 2}
+  m_Interpolate: 2
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
