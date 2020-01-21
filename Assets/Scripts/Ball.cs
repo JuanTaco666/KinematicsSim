@@ -6,7 +6,10 @@ public class Ball : MonoBehaviour
 {
     public GameObject ball;
     public GameObject vector;
+    public PhysicsMaterial2D ballMaterial;
     private CircleCollider2D coll;
+
+    
 
     private GameObject velocity;
     private SpriteRenderer ballRender;
@@ -19,10 +22,10 @@ public class Ball : MonoBehaviour
     private float bounciness;
     private float friction;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        coll = GetComponent<CircleCollider2D>();
         ballRender = GetComponent<SpriteRenderer>();
 
         xPos = ball.transform.position.x;
@@ -37,14 +40,17 @@ public class Ball : MonoBehaviour
         force = instantiateVector(new Vector2(-1, 1), "force");
         ballRender.color = color;
 
-        coll.sharedMaterial.bounciness = bounciness;
-        coll.sharedMaterial.friction = friction;
+        coll = GetComponent<CircleCollider2D>();
+        PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
+        thiccy.bounciness = bounciness;
+        coll.sharedMaterial = thiccy;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+   
     }
 
     //getter methods

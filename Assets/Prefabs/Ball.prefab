@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 4683678037334544934}
   vector: {fileID: 2339244536730963515, guid: 17d8538e5531b4c4a8a53a3d66248008, type: 3}
+  ballMaterial: {fileID: 6200000, guid: 80975b74890ed3f47aa74f0e5181699b, type: 2}
 --- !u!50 &7548577272009900155
 Rigidbody2D:
   serializedVersion: 4
@@ -129,7 +130,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 8be6341e1ce3f4cec9902bc34f72d20a, type: 2}
+  m_Material: {fileID: 6200000, guid: 80975b74890ed3f47aa74f0e5181699b, type: 2}
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
