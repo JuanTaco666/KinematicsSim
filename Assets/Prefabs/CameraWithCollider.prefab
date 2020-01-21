@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5922141628485216108}
   - component: {fileID: 6397948411210309065}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: CameraWithCollider
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
