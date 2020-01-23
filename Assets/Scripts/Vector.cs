@@ -20,7 +20,7 @@ public class Vector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void setColor(Color color)

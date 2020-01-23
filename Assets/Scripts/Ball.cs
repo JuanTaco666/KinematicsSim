@@ -52,7 +52,6 @@ public class Ball : MonoBehaviour
     void Update()
     {
         
-        
     }
 
     //getter methods
@@ -83,6 +82,35 @@ public class Ball : MonoBehaviour
     public Color getColor()
     {
         return (color);
+    }
+    //setter methods 
+    public void setX(float x)
+    {
+        xPos = x;
+    }
+    public void setY(float y)
+    {
+        yPos = yPos;
+    }
+    public void setMass(double mass)
+    {
+        this.mass = mass;
+    }
+    public void setRadius(double radius)
+    {
+        this.radius = radius;
+    }
+    public void setVelocity(GameObject velocity)
+    {
+        this.velocity = velocity;
+    }
+    public void setForce(GameObject force)
+    {
+        this.force = force;
+    }
+    public void setColor(Color color)
+    {
+        this.color = color;
     }
 
     GameObject instantiateVector(Vector2 vector, string description) 
