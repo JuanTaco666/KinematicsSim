@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 4683678037334544934}
   vector: {fileID: 2339244536730963515, guid: 17d8538e5531b4c4a8a53a3d66248008, type: 3}
+  rb: {fileID: 7548577272009900155}
   ballMaterial: {fileID: 6200000, guid: 80975b74890ed3f47aa74f0e5181699b, type: 2}
 --- !u!50 &7548577272009900155
 Rigidbody2D:

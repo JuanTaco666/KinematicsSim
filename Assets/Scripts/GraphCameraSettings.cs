@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSettings : MonoBehaviour
+public class GraphCameraSettings : MonoBehaviour
 {
     public Camera camera;
 
@@ -13,7 +13,7 @@ public class CameraSettings : MonoBehaviour
     {
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
-        camera.enabled = true;
+        camera.enabled = false;
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class CameraSettings : MonoBehaviour
     }
 
     //getters
-   public double getCamHeight()
+    public double getCamHeight()
     {
         return (cameraHeight);
     }
