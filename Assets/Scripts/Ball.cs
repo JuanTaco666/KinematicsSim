@@ -51,7 +51,7 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        velocity.GetComponent<Vector>().setVector2(rb.velocity);
     }
 
     //getter methods
@@ -123,7 +123,6 @@ public class Ball : MonoBehaviour
         v.transform.Rotate(0, 0, angle, Space.World);
         v.GetComponent<Vector>().setVector2(vector);
         v.GetComponent<Vector>().setObject(ball);
-        v.transform.parent = ball.transform;
         return v;
     }
 }
