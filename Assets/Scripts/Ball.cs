@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour
 {
     public GameObject ball;
     public GameObject vector;
+    public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
     private CircleCollider2D coll;
 
@@ -36,7 +37,7 @@ public class Ball : MonoBehaviour
         mass = 1;
         radius = 5;
         color = new Color(0, 1, 0, 1);
-        velocity = instantiateVector(new Vector2(1, 1), "velocity");
+        velocity = instantiateVector(rb.velocity, "velocity");
         force = instantiateVector(new Vector2(-1, 1), "force");
         ballRender.color = color;
 
@@ -50,6 +51,7 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         
     }
 

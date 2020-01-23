@@ -187,8 +187,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 7637701421610886538, guid: d162c966d80c63340a94889d73a9e06f,
+        type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 566123812}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d162c966d80c63340a94889d73a9e06f, type: 3}
+--- !u!50 &566123812 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 7548577272009900155, guid: d162c966d80c63340a94889d73a9e06f,
+    type: 3}
+  m_PrefabInstance: {fileID: 566123811}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1012214844 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2484778264883214645, guid: d395446040594b54dab7be05631f3e7b,
