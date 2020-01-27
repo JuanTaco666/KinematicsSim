@@ -16,8 +16,8 @@ public class Ball : MonoBehaviour
     private SpriteRenderer ballRender;
     private Color color;
     private GameObject force;
-    private double mass;
-    private double radius;
+    private float mass;
+    private float radius;
     private float xPos;
     private float yPos;
     private float bounciness;
@@ -34,7 +34,7 @@ public class Ball : MonoBehaviour
 
         bounciness = 1f;
         friction = 0;
-        mass = 1;
+        mass = 4;
         radius = 5;
         color = new Color(0, 1, 0, 1);
         velocity = instantiateVector(rb.velocity, "velocity");
@@ -51,7 +51,9 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        updateVelocity();
+        updateRadius();
+        updateMass();
     }
 
     //getter methods
@@ -63,11 +65,11 @@ public class Ball : MonoBehaviour
     {
         return (yPos);
     }
-    public double getMass()
+    public float getMass()
     {
         return (mass);
     }
-    public double getRadius()
+    public float getRadius()
     {
         return (radius);
     }
@@ -92,11 +94,11 @@ public class Ball : MonoBehaviour
     {
         yPos = yPos;
     }
-    public void setMass(double mass)
+    public void setMass(float mass)
     {
         this.mass = mass;
     }
-    public void setRadius(double radius)
+    public void setRadius(float radius)
     {
         this.radius = radius;
     }
@@ -112,7 +114,19 @@ public class Ball : MonoBehaviour
     {
         this.color = color;
     }
-
+    //other methods
+    private void updateVelocity()
+    {
+        velocity.GetComponent<Vector>().setVector2(rb.velocity);
+    }
+    private void updateMass()
+    {
+        rb.mass = mass;
+    }
+    private void updateRadius()
+    {
+        transform.localScale = new Vector3(radius, radius, 1);
+    }
     GameObject instantiateVector(Vector2 vector, string description) 
     {
         float angle = Vector2.Angle(new Vector2(1, 0), vector);
@@ -123,7 +137,6 @@ public class Ball : MonoBehaviour
         v.transform.Rotate(0, 0, angle, Space.World);
         v.GetComponent<Vector>().setVector2(vector);
         v.GetComponent<Vector>().setObject(ball);
-        v.transform.parent = ball.transform;
         return v;
     }
 }
