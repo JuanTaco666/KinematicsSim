@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainCameraSettings : MonoBehaviour
 {
     public Camera camera;
+    public GameObject ballPrefab;
 
     private double cameraHeight;
     private double cameraWidth;
@@ -31,4 +32,12 @@ public class MainCameraSettings : MonoBehaviour
     {
         return (cameraWidth);
     }
+
+    public GameObject createBall()
+    {
+        GameObject ball = Instantiate(ballPrefab);
+        ball.transform.SetParent(camera.transform);
+        return ball;
+    }
+
 }
