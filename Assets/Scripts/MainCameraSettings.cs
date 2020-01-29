@@ -38,6 +38,10 @@ public class MainCameraSettings : MonoBehaviour
             float x = (Input.mousePosition.x * 0.01258765f * 2);
             float y = (Input.mousePosition.y * 0.025f) - 5;
             preball.transform.position = new Vector3(x, y, 0);
+            if (Input.GetMouseButtonDown(0))
+            {
+                createBall(x, y);
+            }
         }
     }
     //when Ball Button Is Clicked
