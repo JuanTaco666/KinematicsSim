@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour
     private float yPos;
     private float bounciness;
     private float friction;
+    
 
 
     // Start is called before the first frame update
@@ -31,8 +32,8 @@ public class Ball : MonoBehaviour
 
         xPos = ball.transform.position.x;
         yPos = ball.transform.position.y;
-
-        bounciness = 1f;
+   
+        bounciness = 0.9f;
         friction = 0;
         mass = 4;
         radius = 5;
@@ -45,7 +46,7 @@ public class Ball : MonoBehaviour
         PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
         thiccy.bounciness = bounciness;
         coll.sharedMaterial = thiccy;
-
+        
     }
 
     // Update is called once per frame
@@ -126,6 +127,10 @@ public class Ball : MonoBehaviour
     private void updateRadius()
     {
         transform.localScale = new Vector3(radius, radius, 1);
+    }
+    public void updateYGrav(float XGrav, float YGrav)
+    {
+        Physics2D.gravity = new Vector2(XGrav, YGrav);
     }
     GameObject instantiateVector(Vector2 vector, string description) 
     {

@@ -4,18 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class MainCameraSettings : MonoBehaviour
+public class UI : MonoBehaviour
 {
     public Camera camera;
     public GameObject ballPrefab;
     public GameObject PreBall;
     public Button ballButton;
+    public Slider YGravSlider;
+    public Slider XGravSlider;
+    public InputField YGravText;
+    public InputField XGravText;
 
     private List<GameObject> balls;
     private bool needBall;
     private GameObject preball;
     private double cameraHeight;
     private double cameraWidth;
+    private float YGravValue;
+    private float XGravValue;
     
     
     // Start is called before the first frame update
@@ -24,12 +30,19 @@ public class MainCameraSettings : MonoBehaviour
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
+        YGravValue = -9.81f;
+        XGravValue = 0f;
 
         balls = new List<GameObject>();
         needBall = false;
         Button btnB = ballButton.GetComponent<Button>();
         btnB.onClick.AddListener(TaskOnClick);
-        
+        YGravSlider.onValueChanged.AddListener(delegate { updateYGravText(); });
+        YGravText.onEndEdit.AddListener(delegate { updateYGravSlider(); });
+        updateYGravText();
+        XGravSlider.onValueChanged.AddListener(delegate { updateXGravText(); });
+        XGravText.onEndEdit.AddListener(delegate { updateXGravSlider(); });
+        updateXGravText();
     }
 
     // Update is called once per frame
@@ -46,6 +59,7 @@ public class MainCameraSettings : MonoBehaviour
                 balls.Add(createBall(x, y));
             }
         }
+        
     }
 
     //when Ball Button Is Clicked
@@ -63,6 +77,10 @@ public class MainCameraSettings : MonoBehaviour
         }
        // Debug.Log(balls.Count);
     }
+
+
+
+
     //getters
     public double getCamHeight()
     {
@@ -72,15 +90,56 @@ public class MainCameraSettings : MonoBehaviour
     {
         return (cameraWidth);
     }
+    //-----------------------------------------------
+    private void updateYGravSlider()
+    {
+        YGravSlider.value = float.Parse(YGravText.text);
+        YGravValue = YGravSlider.value;
+        ballYGravUpdate();
 
-    public GameObject createBall(float x,float y)
+    }
+    private void updateYGravText()
+    {
+        YGravText.text = YGravSlider.value.ToString();
+        YGravValue = float.Parse(YGravText.text);
+        ballYGravUpdate();
+    }
+    private void ballYGravUpdate()
+    {
+        foreach (GameObject ball in balls)
+        {
+            ball.GetComponent<Ball>().updateYGrav(XGravValue,YGravValue);
+        }
+    }
+    private void updateXGravSlider()
+    {
+        XGravSlider.value = float.Parse(XGravText.text);
+        XGravValue = XGravSlider.value;
+        ballXGravUpdate();
+
+    }
+    private void updateXGravText()
+    {
+        XGravText.text = XGravSlider.value.ToString();
+        XGravValue = float.Parse(XGravText.text);
+        ballXGravUpdate();
+    }
+    private void ballXGravUpdate()
+    {
+        foreach (GameObject ball in balls)
+        {
+            ball.GetComponent<Ball>().updateYGrav(XGravValue, YGravValue);
+        }
+    }
+    //-----------------------------------------------
+    private GameObject createBall(float x,float y)
     {
         GameObject ball = Instantiate(ballPrefab);
         ball.transform.SetParent(camera.transform);
         ball.transform.position = new Vector3(x, y, 0);
         return ball;
     }
-    public GameObject createPreBall(float x,float y)
+    private GameObject createPreBall(float x,float y)
     {
         GameObject preball = Instantiate(PreBall);
         preball.transform.SetParent(camera.transform);
