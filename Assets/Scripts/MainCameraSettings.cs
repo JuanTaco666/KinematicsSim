@@ -8,15 +8,14 @@ public class MainCameraSettings : MonoBehaviour
 {
     public Camera camera;
     public GameObject ballPrefab;
-    public GameObject preBall;
+    public GameObject PreBall;
     public Button ballButton;
 
-    private GameObject onlyPreball;
-    private bool ballPlacing = false;
-    private bool preBallPlacing = false;
+    private bool needBall = false;
+    private GameObject preball;
     private double cameraHeight;
     private double cameraWidth;
-    private Transform preballTransform;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -33,33 +32,25 @@ public class MainCameraSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (preBallPlacing)
+        if (needBall)
         {
-            onlyPreball = createPreball();
-            preballTransform = onlyPreball.GetComponent<Transform>();
-            preBallPlacing = !preBallPlacing;
-        }
-        if (ballPlacing)
-        {
-            float mouseX = Input.mousePosition.x;
-            float mouseY = Input.mousePosition.y;
-            Vector2 followthecursor = new Vector3(mouseX, mouseY,0);
-            preballTransform.position = followthecursor;//Vector3(mouseX, mouseY, 0);
 
-
+            float x = (Input.mousePosition.x * 0.01258765f * 2);
+            float y = (Input.mousePosition.y * 0.025f) - 5;
+            preball.transform.position = new Vector3(x, y, 0);
         }
-        if (!ballPlacing)
-        {
-            Destroy(onlyPreball);
-        }
-
-        
     }
     //when Ball Button Is Clicked
     void TaskOnClick()
     {
-        ballPlacing = !ballPlacing;
-        preBallPlacing = !preBallPlacing;
+        needBall = !needBall;
+        if (needBall)
+        {
+            preball = createPreBall(0, 0);
+        } else 
+        {
+            Destroy(preball);
+        }
     }
     //getters
     public double getCamHeight()
@@ -71,16 +62,18 @@ public class MainCameraSettings : MonoBehaviour
         return (cameraWidth);
     }
 
-    public GameObject createBall()
+    public GameObject createBall(float x,float y)
     {
         GameObject ball = Instantiate(ballPrefab);
         ball.transform.SetParent(camera.transform);
+        ball.transform.position = new Vector3(x, y, 0);
         return ball;
     }
-    public GameObject createPreball()
+    public GameObject createPreBall(float x,float y)
     {
-        GameObject preball = Instantiate(preBall);
+        GameObject preball = Instantiate(PreBall);
         preball.transform.SetParent(camera.transform);
+        preball.transform.position = new Vector3(x, y, 0);
         return preball;
     }
 
