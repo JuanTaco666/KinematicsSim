@@ -11,7 +11,8 @@ public class MainCameraSettings : MonoBehaviour
     public GameObject PreBall;
     public Button ballButton;
 
-    private bool needBall = false;
+    private List<GameObject> balls;
+    private bool needBall;
     private GameObject preball;
     private double cameraHeight;
     private double cameraWidth;
@@ -24,6 +25,8 @@ public class MainCameraSettings : MonoBehaviour
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
 
+        balls = new List<GameObject>();
+        needBall = false;
         Button btnB = ballButton.GetComponent<Button>();
         btnB.onClick.AddListener(TaskOnClick);
         
@@ -40,10 +43,11 @@ public class MainCameraSettings : MonoBehaviour
             preball.transform.position = new Vector3(x, y, 0);
             if (Input.GetMouseButtonDown(0))
             {
-                createBall(x, y);
+                balls.Add(createBall(x, y));
             }
         }
     }
+
     //when Ball Button Is Clicked
     void TaskOnClick()
     {
@@ -53,8 +57,11 @@ public class MainCameraSettings : MonoBehaviour
             preball = createPreBall(0, 0);
         } else 
         {
+            Destroy(balls[balls.Count - 1]);
+            balls.RemoveAt(balls.Count - 1);
             Destroy(preball);
         }
+       // Debug.Log(balls.Count);
     }
     //getters
     public double getCamHeight()
