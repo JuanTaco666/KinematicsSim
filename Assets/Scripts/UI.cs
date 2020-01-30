@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
     public GameObject ballPrefab;
     public GameObject PreBall;
     public Button ballButton;
+    public Button pauseButton;
     public Slider YGravSlider;
     public Slider XGravSlider;
     public InputField YGravText;
@@ -17,6 +18,7 @@ public class UI : MonoBehaviour
 
     private List<GameObject> balls;
     private bool needBall;
+    private bool isPaused;
     private GameObject preball;
     private double cameraHeight;
     private double cameraWidth;
@@ -35,8 +37,11 @@ public class UI : MonoBehaviour
 
         balls = new List<GameObject>();
         needBall = false;
+        isPaused = false;
         Button btnB = ballButton.GetComponent<Button>();
-        btnB.onClick.AddListener(TaskOnClick);
+        btnB.onClick.AddListener(creatingBalls);
+        Button btnP = pauseButton.GetComponent<Button>();
+        btnP.onClick.AddListener(Pause);
         YGravSlider.onValueChanged.AddListener(delegate { updateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { updateYGravSlider(); });
         updateYGravText();
@@ -63,7 +68,7 @@ public class UI : MonoBehaviour
     }
 
     //when Ball Button Is Clicked
-    void TaskOnClick()
+    void creatingBalls()
     {
         needBall = !needBall;
         if (needBall)
@@ -78,11 +83,24 @@ public class UI : MonoBehaviour
        // Debug.Log(balls.Count);
     }
 
+    void Pause()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+            pauseButton.GetComponentInChildren<Text>().text = "Pause";
+        }
+        else
+        {
+            Time.timeScale = 0;
+            isPaused = true;
+            pauseButton.GetComponentInChildren<Text>().text = "Play"; 
+        }
+    }
 
-
-
-    //getters
-    public double getCamHeight()
+        //getters
+        public double getCamHeight()
     {
         return (cameraHeight);
     }

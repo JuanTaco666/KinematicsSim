@@ -33,7 +33,7 @@ public class Ball : MonoBehaviour
         xPos = ball.transform.position.x;
         yPos = ball.transform.position.y;
    
-        bounciness = 0.9f;
+        bounciness = 0.8f;
         friction = 0;
         mass = 4;
         radius = 5;
