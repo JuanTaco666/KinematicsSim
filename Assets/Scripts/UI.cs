@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
     public GameObject PreBall;
     public Button ballButton;
     public Button pauseButton;
+    public Button resetButton;
     public Slider YGravSlider;
     public Slider XGravSlider;
     public InputField YGravText;
@@ -38,16 +39,22 @@ public class UI : MonoBehaviour
         balls = new List<GameObject>();
         needBall = false;
         isPaused = false;
+        
+
         Button btnB = ballButton.GetComponent<Button>();
         btnB.onClick.AddListener(creatingBalls);
         Button btnP = pauseButton.GetComponent<Button>();
         btnP.onClick.AddListener(Pause);
+        Button btnR = resetButton.GetComponent<Button>();
+        btnR.onClick.AddListener(Reset);
+
         YGravSlider.onValueChanged.AddListener(delegate { updateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { updateYGravSlider(); });
         updateYGravText();
         XGravSlider.onValueChanged.AddListener(delegate { updateXGravText(); });
         XGravText.onEndEdit.AddListener(delegate { updateXGravSlider(); });
         updateXGravText();
+        Pause();
     }
 
     // Update is called once per frame
@@ -80,9 +87,9 @@ public class UI : MonoBehaviour
             balls.RemoveAt(balls.Count - 1);
             Destroy(preball);
         }
-       // Debug.Log(balls.Count);
     }
 
+    //when Pause Button Is Clicked
     void Pause()
     {
         if (isPaused)
@@ -90,13 +97,48 @@ public class UI : MonoBehaviour
             Time.timeScale = 1;
             isPaused = false;
             pauseButton.GetComponentInChildren<Text>().text = "Pause";
+            if (needBall)
+            {
+                Destroy(balls[balls.Count - 1]);
+                balls.RemoveAt(balls.Count - 1);
+            }
         }
         else
         {
             Time.timeScale = 0;
             isPaused = true;
-            pauseButton.GetComponentInChildren<Text>().text = "Play"; 
+            pauseButton.GetComponentInChildren<Text>().text = "Play";
+            if (needBall)
+            {
+                Destroy(balls[balls.Count - 1]);
+                balls.RemoveAt(balls.Count - 1);
+            }
         }
+    }
+
+    //when Reset Button Is Clicked
+    void Reset()
+    {
+        YGravValue = -9.81f;
+        XGravValue = 0f;
+        if (needBall)
+        {
+            Destroy(balls[balls.Count - 1]);
+            balls.RemoveAt(balls.Count - 1);
+            Destroy(preball);
+        }
+        needBall = false;
+        isPaused = false;
+        YGravSlider.value = YGravValue;
+        updateYGravText();
+        XGravSlider.value = XGravValue;
+        updateXGravText();
+        Pause();
+        foreach (GameObject ball in balls)
+        {
+            Destroy(ball);
+        }
+        balls.Clear();
     }
 
         //getters
