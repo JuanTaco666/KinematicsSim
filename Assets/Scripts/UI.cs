@@ -7,6 +7,7 @@ using System.Collections;
 public class UI : MonoBehaviour
 {
     public Camera camera;
+    public Text thing;
     public GameObject ballPrefab;
     public GameObject PreBall;
     public Button ballButton;
@@ -21,8 +22,8 @@ public class UI : MonoBehaviour
     private bool needBall;
     private bool isPaused;
     private GameObject preball;
-    private double cameraHeight;
-    private double cameraWidth;
+    private float cameraHeight;
+    private float cameraWidth;
     private float YGravValue;
     private float XGravValue;
     
@@ -55,16 +56,20 @@ public class UI : MonoBehaviour
         XGravText.onEndEdit.AddListener(delegate { updateXGravSlider(); });
         updateXGravText();
         Pause();
+    
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        thing.text = (cameraWidth).ToString();
         if (needBall)
         {
 
-            float x = (Input.mousePosition.x * 0.01258765f * 2);
-            float y = (Input.mousePosition.y * 0.025f) - 5;
+            float y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+            float x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
             preball.transform.position = new Vector3(x, y, 0);
             if (Input.GetMouseButtonDown(0))
             {
