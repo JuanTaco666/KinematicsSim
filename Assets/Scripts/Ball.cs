@@ -9,7 +9,6 @@ public class Ball : MonoBehaviour
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
     private CircleCollider2D coll;
-
     
 
     private GameObject velocity;
@@ -33,7 +32,7 @@ public class Ball : MonoBehaviour
         xPos = ball.transform.position.x;
         yPos = ball.transform.position.y;
    
-        bounciness = 0.8f;
+        bounciness = 0.9f;
         friction = 0;
         mass = 4;
         radius = 5;
@@ -53,8 +52,6 @@ public class Ball : MonoBehaviour
     void Update()
     {
         updateVelocity();
-        updateRadius();
-        updateMass();
     }
 
     //getter methods

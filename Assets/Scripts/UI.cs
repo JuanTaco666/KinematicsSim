@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class UI : MonoBehaviour
 {
     public Camera camera;
-    public Text thing;
     public GameObject ballPrefab;
     public GameObject PreBall;
     public Button ballButton;
@@ -15,8 +15,11 @@ public class UI : MonoBehaviour
     public Button resetButton;
     public Slider YGravSlider;
     public Slider XGravSlider;
+    public GameObject ballPanel;
     public InputField YGravText;
     public InputField XGravText;
+    public InputField massInput;
+    
 
     private List<GameObject> balls;
     private bool needBall;
@@ -55,16 +58,18 @@ public class UI : MonoBehaviour
         XGravSlider.onValueChanged.AddListener(delegate { updateXGravText(); });
         XGravText.onEndEdit.AddListener(delegate { updateXGravSlider(); });
         updateXGravText();
-        Pause();
-    
 
+       // massInput.onEndEdit.AddListener(delegate { updateMass(); });
+        Pause();
+
+        //camera.aspect = 10;
+        //Debug.Log(camera.aspect);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        thing.text = (cameraWidth).ToString();
         if (needBall)
         {
 
@@ -75,7 +80,9 @@ public class UI : MonoBehaviour
             {
                 balls.Add(createBall(x, y));
             }
+           
         }
+      
         
     }
 
@@ -101,23 +108,19 @@ public class UI : MonoBehaviour
         {
             Time.timeScale = 1;
             isPaused = false;
-            pauseButton.GetComponentInChildren<Text>().text = "Pause";
-            if (needBall)
-            {
-                Destroy(balls[balls.Count - 1]);
-                balls.RemoveAt(balls.Count - 1);
-            }
+            pauseButton.GetComponentInChildren<Text>().text = "Pause";    
         }
         else
         {
             Time.timeScale = 0;
             isPaused = true;
             pauseButton.GetComponentInChildren<Text>().text = "Play";
-            if (needBall)
-            {
-                Destroy(balls[balls.Count - 1]);
-                balls.RemoveAt(balls.Count - 1);
-            }
+            if (needBall) ;
+        }
+        if (needBall)
+        {
+            Destroy(balls[balls.Count - 1]);
+            balls.RemoveAt(balls.Count - 1);
         }
     }
 
@@ -154,6 +157,40 @@ public class UI : MonoBehaviour
     public double getCamWidth()
     {
         return (cameraWidth);
+    }
+    //-----------------------------------------------
+    private void getClickedObject()
+    {
+
+    }
+
+    private void updateMass(Ball ball)
+    {
+
+    }
+    private void updateRadius(Ball ball)
+    {
+
+    }
+    private void updateFriction(Ball ball)
+    {
+
+    }
+    private void updateElasticity(Ball ball)
+    {
+
+    }
+    private void updatePosition(Ball ball)
+    {
+
+    }
+    private void updateForce(Ball ball)
+    {
+
+    }
+    private void changeColor(Ball ball)
+    {
+
     }
     //-----------------------------------------------
     private void updateYGravSlider()
@@ -201,7 +238,7 @@ public class UI : MonoBehaviour
     {
         GameObject ball = Instantiate(ballPrefab);
         ball.transform.SetParent(camera.transform);
-        ball.transform.position = new Vector3(x, y, 0);
+        ball.transform.position = new Vector3(x, y, -9);
         return ball;
     }
     private GameObject createPreBall(float x,float y)
