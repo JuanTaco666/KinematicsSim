@@ -7,7 +7,6 @@ using System.Collections;
 public class UI : MonoBehaviour
 {
     public Camera camera;
-    public Text thing;
     public GameObject ballPrefab;
     public GameObject PreBall;
     public Button ballButton;
@@ -64,7 +63,6 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        thing.text = (cameraWidth).ToString();
         if (needBall)
         {
 
@@ -97,27 +95,22 @@ public class UI : MonoBehaviour
     //when Pause Button Is Clicked
     void Pause()
     {
+        
         if (isPaused)
         {
             Time.timeScale = 1;
             isPaused = false;
             pauseButton.GetComponentInChildren<Text>().text = "Pause";
-            if (needBall)
-            {
-                Destroy(balls[balls.Count - 1]);
-                balls.RemoveAt(balls.Count - 1);
-            }
-        }
-        else
-        {
+        }else{
             Time.timeScale = 0;
             isPaused = true;
             pauseButton.GetComponentInChildren<Text>().text = "Play";
-            if (needBall)
-            {
-                Destroy(balls[balls.Count - 1]);
-                balls.RemoveAt(balls.Count - 1);
-            }
+        }
+
+        if (needBall)
+        {
+            Destroy(balls[balls.Count - 1]);
+            balls.RemoveAt(balls.Count - 1);
         }
     }
 
