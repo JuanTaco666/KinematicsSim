@@ -96,14 +96,12 @@ public class UI : MonoBehaviour
     void Pause()
     {
         
-        if (isPaused)
+        if (GameControl.IsPaused())
         {
-            Time.timeScale = 1;
-            isPaused = false;
+            GameControl.Play();
             pauseButton.GetComponentInChildren<Text>().text = "Pause";
         }else{
-            Time.timeScale = 0;
-            isPaused = true;
+            GameControl.Pause();
             pauseButton.GetComponentInChildren<Text>().text = "Play";
         }
 
