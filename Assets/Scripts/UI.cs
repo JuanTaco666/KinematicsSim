@@ -18,18 +18,28 @@ public class UI : MonoBehaviour
     public GameObject ballPanel;
     public InputField YGravText;
     public InputField XGravText;
-    public InputField massInput;
-    
+    public InputField MassInput;
+    public InputField XInput;
+    public InputField YInput;
+    public InputField RadiusInput;
+    public InputField ElasticityInput;
+    public InputField FrictionInput;
+    public InputField ForceXInput;
+    public InputField ForceYInput;
+    public Button ColorButton;
+    public GameObject ColorPicker;
 
+    private Ball currentBall;
     private List<GameObject> balls;
     private bool needBall;
     private bool isPaused;
+    private bool isColorShown;
     private GameObject preball;
     private float cameraHeight;
     private float cameraWidth;
     private float YGravValue;
     private float XGravValue;
-    
+    private int ballIndex;
     
     // Start is called before the first frame update
     void Start()
@@ -43,7 +53,9 @@ public class UI : MonoBehaviour
         balls = new List<GameObject>();
         needBall = false;
         isPaused = false;
-        
+        isColorShown = false;
+        ballIndex = 0;
+
 
         Button btnB = ballButton.GetComponent<Button>();
         btnB.onClick.AddListener(creatingBalls);
@@ -51,6 +63,8 @@ public class UI : MonoBehaviour
         btnP.onClick.AddListener(Pause);
         Button btnR = resetButton.GetComponent<Button>();
         btnR.onClick.AddListener(Reset);
+        Button btnC = ColorButton.GetComponent<Button>();
+        btnC.onClick.AddListener(changeColor);
 
         YGravSlider.onValueChanged.AddListener(delegate { updateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { updateYGravSlider(); });
@@ -59,11 +73,19 @@ public class UI : MonoBehaviour
         XGravText.onEndEdit.AddListener(delegate { updateXGravSlider(); });
         updateXGravText();
 
-       // massInput.onEndEdit.AddListener(delegate { updateMass(); });
-        Pause();
+        MassInput.onEndEdit.AddListener(delegate { updateMass(); });
+        RadiusInput.onEndEdit.AddListener(delegate { updateRadius(); });
+        FrictionInput.onEndEdit.AddListener(delegate { updateFriction(); });
+        ElasticityInput.onEndEdit.AddListener(delegate { updateElasticity(); });
+        XInput.onEndEdit.AddListener(delegate { updatePosition(); });
+        YInput.onEndEdit.AddListener(delegate { updatePosition(); });
+        ForceXInput.onEndEdit.AddListener(delegate { updateForce(); });
+        ForceYInput.onEndEdit.AddListener(delegate { updateForce(); });
 
-        //camera.aspect = 10;
-        //Debug.Log(camera.aspect);
+        Pause();
+        hideUIPanel(false);
+
+        
 
     }
 
@@ -82,7 +104,10 @@ public class UI : MonoBehaviour
             }
            
         }
-      
+        if (isColorShown)
+        {
+            updateColor();
+        }
         
     }
 
@@ -99,6 +124,7 @@ public class UI : MonoBehaviour
             balls.RemoveAt(balls.Count - 1);
             Destroy(preball);
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     //when Pause Button Is Clicked
@@ -122,6 +148,7 @@ public class UI : MonoBehaviour
             Destroy(balls[balls.Count - 1]);
             balls.RemoveAt(balls.Count - 1);
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     //when Reset Button Is Clicked
@@ -147,6 +174,7 @@ public class UI : MonoBehaviour
             Destroy(ball);
         }
         balls.Clear();
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
         //getters
@@ -159,38 +187,64 @@ public class UI : MonoBehaviour
         return (cameraWidth);
     }
     //-----------------------------------------------
-    private void getClickedObject()
+    public void openUIPanel(Ball Ball)
+    {
+        if (!needBall)
+        {
+            hideUIPanel(true);
+            hideUIColorPanel(false);
+            currentBall = Ball;
+            
+        }
+    }
+    public void hideUIPanel(bool isShown)
+    { 
+        ballPanel.SetActive(isShown);
+        isColorShown = false;
+        hideUIColorPanel(isShown);
+    }
+    private void hideUIColorPanel(bool isShown)
+    {
+        ColorPicker.SetActive(isShown);
+    }
+    private void updateMass()
+    {
+        
+    }
+    private void updateRadius()
     {
 
     }
-
-    private void updateMass(Ball ball)
+    private void updateFriction()
     {
 
     }
-    private void updateRadius(Ball ball)
+    private void updateElasticity()
     {
 
     }
-    private void updateFriction(Ball ball)
+    private void updatePosition()
     {
 
     }
-    private void updateElasticity(Ball ball)
+    private void updateForce()
     {
 
     }
-    private void updatePosition(Ball ball)
+    void changeColor()
     {
+        isColorShown = !isColorShown;
+        hideUIColorPanel(isColorShown);
 
+        EventSystem.current.SetSelectedGameObject(null);
     }
-    private void updateForce(Ball ball)
+    private void updateColor()
     {
-
+        currentBall.GetComponent<Ball>().setColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
     }
-    private void changeColor(Ball ball)
+    public Ball getCurrentBall()
     {
-
+        return (currentBall);
     }
     //-----------------------------------------------
     private void updateYGravSlider()
@@ -239,6 +293,7 @@ public class UI : MonoBehaviour
         GameObject ball = Instantiate(ballPrefab);
         ball.transform.SetParent(camera.transform);
         ball.transform.position = new Vector3(x, y, -9);
+        ball.GetComponent<Ball>().camera = camera;
         return ball;
     }
     private GameObject createPreBall(float x,float y)

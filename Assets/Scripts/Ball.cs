@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Ball : MonoBehaviour
 {
+
     public GameObject ball;
     public GameObject vector;
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
+    public Camera camera;
     private CircleCollider2D coll;
-    
 
+    private bool isPanelThere;
     private GameObject velocity;
     private SpriteRenderer ballRender;
     private Color color;
@@ -27,6 +29,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isPanelThere = false;
         ballRender = GetComponent<SpriteRenderer>();
 
         xPos = ball.transform.position.x;
@@ -111,8 +114,25 @@ public class Ball : MonoBehaviour
     public void setColor(Color color)
     {
         this.color = color;
+        ballRender.color = color;
     }
     //other methods
+    void OnMouseDown()
+    {
+        if (camera == null)
+            return;
+        if (camera.GetComponent<UI>().getCurrentBall() == this && isPanelThere == true)
+        {
+            camera.GetComponent<UI>().hideUIPanel(false);
+            isPanelThere = false;
+        }
+        else
+        {
+            isPanelThere = true;
+            camera.GetComponent<UI>().openUIPanel(this);
+            Debug.Log("Sprite Clicked");
+        }
+    }
     private void updateVelocity()
     {
         velocity.GetComponent<Vector>().setVector2(rb.velocity);

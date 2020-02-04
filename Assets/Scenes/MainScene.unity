@@ -5240,6 +5240,56 @@ PrefabInstance:
       propertyPath: MassInput
       value: 
       objectReference: {fileID: 570653670}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: massInput
+      value: 
+      objectReference: {fileID: 570653670}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ColorButton
+      value: 
+      objectReference: {fileID: 2043894812}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: XInput
+      value: 
+      objectReference: {fileID: 424772697}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: YInput
+      value: 
+      objectReference: {fileID: 555203543}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: RadiusInput
+      value: 
+      objectReference: {fileID: 2085910443}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ElasticityInput
+      value: 
+      objectReference: {fileID: 1279288972}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: FrictionInput
+      value: 
+      objectReference: {fileID: 601868884}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ForceXInput
+      value: 
+      objectReference: {fileID: 786979769}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ForceYInput
+      value: 
+      objectReference: {fileID: 1114113570}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ColorPicker
+      value: 
+      objectReference: {fileID: 1938133424}
     - target: {fileID: 531038126633199302, guid: d395446040594b54dab7be05631f3e7b,
         type: 3}
       propertyPath: m_Name
@@ -6013,6 +6063,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787124513}
   m_CullTransparentMesh: 0
+--- !u!1 &1938133424 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 157272, guid: 916ee089a0d7b63419075f91e1c657ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 1034460885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2015119708
 GameObject:
   m_ObjectHideFlags: 0
