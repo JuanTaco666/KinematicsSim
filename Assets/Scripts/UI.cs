@@ -39,7 +39,7 @@ public class UI : MonoBehaviour
     private float cameraWidth;
     private float YGravValue;
     private float XGravValue;
-    private int ballIndex;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -54,7 +54,7 @@ public class UI : MonoBehaviour
         needBall = false;
         isPaused = false;
         isColorShown = false;
-        ballIndex = 0;
+       
 
 
         Button btnB = ballButton.GetComponent<Button>();
@@ -194,9 +194,11 @@ public class UI : MonoBehaviour
             hideUIPanel(true);
             hideUIColorPanel(false);
             currentBall = Ball;
-            
+            MassInput.text = (currentBall.GetComponent<Ball>().getMass()).ToString();
+            RadiusInput.text = (currentBall.GetComponent<Ball>().getRadius()).ToString();
         }
     }
+    
     public void hideUIPanel(bool isShown)
     { 
         ballPanel.SetActive(isShown);
@@ -209,11 +211,13 @@ public class UI : MonoBehaviour
     }
     private void updateMass()
     {
-        
+        currentBall.GetComponent<Ball>().setMass(float.Parse(MassInput.text));
+        MassInput.text = (currentBall.GetComponent<Ball>().getMass()).ToString();
     }
     private void updateRadius()
     {
-
+        currentBall.GetComponent<Ball>().setRadius(float.Parse(RadiusInput.text));
+        RadiusInput.text = (currentBall.GetComponent<Ball>().getRadius()).ToString();
     }
     private void updateFriction()
     {
@@ -264,7 +268,7 @@ public class UI : MonoBehaviour
     {
         foreach (GameObject ball in balls)
         {
-            ball.GetComponent<Ball>().updateYGrav(XGravValue,YGravValue);
+            ball.GetComponent<Ball>().updateGrav(XGravValue,YGravValue);
         }
     }
     private void updateXGravSlider()
@@ -284,7 +288,7 @@ public class UI : MonoBehaviour
     {
         foreach (GameObject ball in balls)
         {
-            ball.GetComponent<Ball>().updateYGrav(XGravValue, YGravValue);
+            ball.GetComponent<Ball>().updateGrav(XGravValue, YGravValue);
         }
     }
     //-----------------------------------------------

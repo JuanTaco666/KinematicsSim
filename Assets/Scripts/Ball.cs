@@ -10,8 +10,8 @@ public class Ball : MonoBehaviour
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
     public Camera camera;
-    private CircleCollider2D coll;
 
+    private CircleCollider2D coll;
     private bool isPanelThere;
     private GameObject velocity;
     private SpriteRenderer ballRender;
@@ -21,7 +21,7 @@ public class Ball : MonoBehaviour
     private float radius;
     private float xPos;
     private float yPos;
-    private float bounciness;
+    private float elasticity;
     private float friction;
     
 
@@ -35,9 +35,9 @@ public class Ball : MonoBehaviour
         xPos = ball.transform.position.x;
         yPos = ball.transform.position.y;
    
-        bounciness = 0.9f;
+        elasticity = 0.9f;
         friction = 0;
-        mass = 4;
+        mass = 1;
         radius = 5;
         color = new Color(0, 1, 0, 1);
         velocity = instantiateVector(rb.velocity, "velocity");
@@ -46,7 +46,7 @@ public class Ball : MonoBehaviour
 
         coll = GetComponent<CircleCollider2D>();
         PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
-        thiccy.bounciness = bounciness;
+        thiccy.bounciness = elasticity;
         coll.sharedMaterial = thiccy;
         
     }
@@ -74,6 +74,14 @@ public class Ball : MonoBehaviour
     {
         return (radius);
     }
+    public float getElasticity()
+    {
+        return (elasticity);
+    }
+    public float getFriction()
+    {
+        return (friction);
+    }
     public GameObject getVelocity()
     {
         return (velocity);
@@ -98,10 +106,12 @@ public class Ball : MonoBehaviour
     public void setMass(float mass)
     {
         this.mass = mass;
+        rb.mass = mass;
     }
     public void setRadius(float radius)
     {
         this.radius = radius;
+        transform.localScale = new Vector3(radius, radius, 1);
     }
     public void setVelocity(GameObject velocity)
     {
@@ -130,22 +140,14 @@ public class Ball : MonoBehaviour
         {
             isPanelThere = true;
             camera.GetComponent<UI>().openUIPanel(this);
-            Debug.Log("Sprite Clicked");
+            //Debug.Log("Sprite Clicked");
         }
     }
     private void updateVelocity()
     {
         velocity.GetComponent<Vector>().setVector2(rb.velocity);
     }
-    private void updateMass()
-    {
-        rb.mass = mass;
-    }
-    private void updateRadius()
-    {
-        transform.localScale = new Vector3(radius, radius, 1);
-    }
-    public void updateYGrav(float XGrav, float YGrav)
+    public void updateGrav(float XGrav, float YGrav)
     {
         Physics2D.gravity = new Vector2(XGrav, YGrav);
     }
