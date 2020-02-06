@@ -83,7 +83,6 @@ public class UI : MonoBehaviour
         ForceXInput.onEndEdit.AddListener(delegate { UpdateForce(); });
         ForceYInput.onEndEdit.AddListener(delegate { UpdateForce(); });
 
-        Pause();
         HideUIPanel(false);
 
     }
@@ -195,6 +194,7 @@ public class UI : MonoBehaviour
             MassInput.text = (currentBall.GetComponent<Ball>().GetMass()).ToString();
             RadiusInput.text = (currentBall.GetComponent<Ball>().GetRadius()).ToString();
             FrictionInput.text = (currentBall.GetComponent<Ball>().GetFriction()).ToString();
+            ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
         }
     }
     
@@ -225,11 +225,17 @@ public class UI : MonoBehaviour
     }
     private void UpdateElasticity()
     {
-
+        currentBall.GetComponent<Ball>().SetElasticity(float.Parse(ElasticityInput.text));
+        if (currentBall.GetComponent<Ball>().GetElasticity() > 1){
+            currentBall.GetComponent<Ball>().SetElasticity(1);
+        }else if (currentBall.GetComponent<Ball>().GetElasticity() < 0){
+            currentBall.GetComponent<Ball>().SetElasticity(0);
+        }
+        ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
     }
     private void UpdatePosition()
     {
-
+       //currentBall.GetComponent<Ball>().SetPosition(float.Parse(XInput.text), float.Parse(YInput.text));
     }
     private void UpdateForce()
     {
