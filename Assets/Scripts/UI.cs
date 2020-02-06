@@ -196,6 +196,7 @@ public class UI : MonoBehaviour
             currentBall = Ball;
             MassInput.text = (currentBall.GetComponent<Ball>().getMass()).ToString();
             RadiusInput.text = (currentBall.GetComponent<Ball>().getRadius()).ToString();
+            FrictionInput.text = (currentBall.GetComponent<Ball>().getFriction()).ToString();
         }
     }
     
@@ -221,7 +222,8 @@ public class UI : MonoBehaviour
     }
     private void updateFriction()
     {
-
+        currentBall.GetComponent<Ball>().setFriction(float.Parse(FrictionInput.text));
+        FrictionInput.text = (currentBall.GetComponent<Ball>().getFriction()).ToString();
     }
     private void updateElasticity()
     {

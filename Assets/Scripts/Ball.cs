@@ -45,9 +45,7 @@ public class Ball : MonoBehaviour
         ballRender.color = color;
 
         coll = GetComponent<CircleCollider2D>();
-        PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
-        thiccy.bounciness = elasticity;
-        coll.sharedMaterial = thiccy;
+        makeMaterial(elasticity,friction);
         
     }
 
@@ -57,6 +55,13 @@ public class Ball : MonoBehaviour
         updateVelocity();
     }
 
+    private void makeMaterial(float elasticity,float friction)
+    {
+        PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
+        thiccy.bounciness = elasticity;
+        thiccy.friction = friction;
+        coll.sharedMaterial = thiccy;
+    }
     //getter methods
     public double getX()
     {
@@ -107,6 +112,16 @@ public class Ball : MonoBehaviour
     {
         this.mass = mass;
         rb.mass = mass;
+    }
+    public void setElasticity(float elasticity)
+    {
+        this.elasticity = elasticity;
+        makeMaterial(elasticity, friction);
+    }
+    public void setFriction(float friction)
+    {
+        this.friction = friction;
+        makeMaterial(elasticity, friction);
     }
     public void setRadius(float radius)
     {
