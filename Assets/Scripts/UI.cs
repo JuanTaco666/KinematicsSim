@@ -43,6 +43,9 @@ public class UI : MonoBehaviour
     private float cameraWidth;
     private float YGravValue;
     private float XGravValue;
+    public float XScale;
+
+      public float YScale;
     
     // Start is called before the first frame update
     void Start()
@@ -52,6 +55,9 @@ public class UI : MonoBehaviour
         camera.enabled = true;
         YGravValue = -9.81f;
         XGravValue = 0f;
+        Debug.Log(cameraHeight + "    " + cameraWidth);
+
+
 
         balls = new List<GameObject>();
         needBall = false;
@@ -158,12 +164,14 @@ public class UI : MonoBehaviour
             balls.RemoveAt(balls.Count - 1);
             Destroy(preball);
         }
+        
         needBall = false;
         isPaused = false;
         YGravSlider.value = YGravValue;
         UpdateYGravText();
         XGravSlider.value = XGravValue;
         UpdateXGravText();
+        HideUIPanel(false);
         Pause();
         foreach (GameObject ball in balls)
         {
@@ -195,6 +203,8 @@ public class UI : MonoBehaviour
             RadiusInput.text = (currentBall.GetComponent<Ball>().GetRadius()).ToString();
             FrictionInput.text = (currentBall.GetComponent<Ball>().GetFriction()).ToString();
             ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
+            XInput.text = (currentBall.GetComponent<Ball>().GetX()).ToString();
+            YInput.text = (currentBall.GetComponent<Ball>().GetY()).ToString();
         }
     }
     
@@ -235,7 +245,9 @@ public class UI : MonoBehaviour
     }
     private void UpdatePosition()
     {
-       //currentBall.GetComponent<Ball>().SetPosition(float.Parse(XInput.text), float.Parse(YInput.text));
+          currentBall.GetComponent<Ball>().SetPosition(float.Parse(XInput.text),float.Parse(YInput.text));
+        XInput.text = (currentBall.GetComponent<Ball>().GetX()).ToString();
+         YInput.text = (currentBall.GetComponent<Ball>().GetY()).ToString();
     }
     private void UpdateForce()
     {
