@@ -21,6 +21,7 @@ public class UI : MonoBehaviour
     public Slider YGravSlider;
     public Slider XGravSlider;
 
+    public Text TimeDisplay;
     public GameObject ballPanel;
     public InputField MassInput;
     public InputField XInput;
@@ -35,6 +36,7 @@ public class UI : MonoBehaviour
 
     private Ball currentBall;
     private GameObject preball;
+    private float time;
     private List<GameObject> balls;
     private bool needBall;
     private bool isPaused;
@@ -50,12 +52,13 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        time = 0;
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
         YGravValue = -9.81f;
         XGravValue = 0f;
-        Debug.Log(cameraHeight + "    " + cameraWidth);
+        Debug.Log(cameraHeight + "    " + cameraHeight);
 
 
 
@@ -96,6 +99,7 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateTime();
         if (needBall)
         {
             float y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
@@ -181,7 +185,14 @@ public class UI : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
     }
 
+     private void UpdateTime(){
+         time  += Time.deltaTime;
+         TimeDisplay.text = time.ToString();
+     }
     //getters
+    public float GetTime(){
+        return(time);
+    }
     public double GetCamHeight()
     {
         return (cameraHeight);
