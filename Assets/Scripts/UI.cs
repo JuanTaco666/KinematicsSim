@@ -268,11 +268,12 @@ public class UI : MonoBehaviour
     {
         isColorShown = !isColorShown;
         HideUIColorPanel(isColorShown);
-
+        ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetComponent<Ball>().GetColor();
         EventSystem.current.SetSelectedGameObject(null);
     }
     private void UpdateColor()
     {
+        
         currentBall.GetComponent<Ball>().SetColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
     }
     public Ball GetCurrentBall()
