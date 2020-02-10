@@ -1,147 +1,173 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Ball : MonoBehaviour
 {
     public GameObject ball;
     public GameObject vector;
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
-    private CircleCollider2D coll;
+    public Camera camera;
 
-    
-
+    private GameObject force;
     private GameObject velocity;
+    private CircleCollider2D coll;
     private SpriteRenderer ballRender;
     private Color color;
-    private GameObject force;
+    private bool isPanelThere;
     private float mass;
     private float radius;
-    private float xPos;
-    private float yPos;
-    private float bounciness;
+    private float elasticity;
     private float friction;
     
-
-
     // Start is called before the first frame update
     void Start()
     {
-        ballRender = GetComponent<SpriteRenderer>();
-
-        xPos = ball.transform.position.x;
-        yPos = ball.transform.position.y;
+        isPanelThere = false;
    
-        bounciness = 0.8f;
+        elasticity = 0.9f;
         friction = 0;
-        mass = 4;
+        mass = 1;
         radius = 5;
+
+        ballRender = GetComponent<SpriteRenderer>();
         color = new Color(0, 1, 0, 1);
-        velocity = instantiateVector(rb.velocity, "velocity");
-        force = instantiateVector(new Vector2(-1, 1), "force");
         ballRender.color = color;
 
+        velocity = InstantiateVector(rb.velocity, "velocity");
+        force = InstantiateVector(new Vector2(0, 0), "force");
+
         coll = GetComponent<CircleCollider2D>();
-        PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
-        thiccy.bounciness = bounciness;
-        coll.sharedMaterial = thiccy;
+        MakeMaterial(elasticity,friction);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateVelocity();
-        updateRadius();
-        updateMass();
+        UpdateVelocity();
+    }
+
+    private void MakeMaterial(float elasticity,float friction)
+    {
+        PhysicsMaterial2D thiccy = Instantiate(ballMaterial);
+        thiccy.bounciness = elasticity;
+        thiccy.friction = friction;
+        coll.sharedMaterial = thiccy;
     }
 
     //getter methods
-    public double getX()
+    public float GetX()
     {
-        return (xPos);
+        return (ball.transform.position.x);
     }
-    public double getY()
+    public float GetY()
     {
-        return (yPos);
+        return (ball.transform.position.y);
     }
-    public float getMass()
+    public float GetMass()
     {
         return (mass);
     }
-    public float getRadius()
+    public float GetRadius()
     {
         return (radius);
     }
-    public GameObject getVelocity()
+    public float GetElasticity()
+    {
+        return (elasticity);
+    }
+    public float GetFriction()
+    {
+        return (friction);
+    }
+    public GameObject GetVelocity()
     {
         return (velocity);
     }
-    public GameObject getForce()
+    public GameObject GetForce()
     {
         return (force);
     }
-    public Color getColor()
+    public Color GetColor()
     {
         return (color);
     }
+
     //setter methods 
-    public void setX(float x)
-    {
-        xPos = x;
+    public void SetPosition(float x, float y){
+        ball.transform.position = new Vector3(x, y, 0);
     }
-    public void setY(float y)
-    {
-        yPos = yPos;
-    }
-    public void setMass(float mass)
+    public void SetMass(float mass)
     {
         this.mass = mass;
+        rb.mass = mass;
     }
-    public void setRadius(float radius)
+    public void SetElasticity(float elasticity)
+    {
+        this.elasticity = elasticity;
+        MakeMaterial(elasticity, friction);
+    }
+    public void SetFriction(float friction)
+    {
+        this.friction = friction;
+        MakeMaterial(elasticity, friction);
+    }
+    public void SetRadius(float radius)
     {
         this.radius = radius;
+        transform.localScale = new Vector3(radius, radius, 1);
     }
-    public void setVelocity(GameObject velocity)
+    public void SetVelocity(GameObject velocity)
     {
         this.velocity = velocity;
     }
-    public void setForce(GameObject force)
+    public void SetForce(GameObject force)
     {
         this.force = force;
     }
-    public void setColor(Color color)
+    public void SetColor(Color color)
     {
         this.color = color;
+        ballRender.color = color;
     }
+
     //other methods
-    private void updateVelocity()
+    void OnMouseDown()
     {
-        velocity.GetComponent<Vector>().setVector2(rb.velocity);
+        if (camera == null)
+            return;
+        if (camera.GetComponent<UI>().GetCurrentBall() == this && isPanelThere == true)
+        {
+            camera.GetComponent<UI>().HideUIPanel(false);
+            isPanelThere = false;
+        }
+        else
+        {
+            isPanelThere = true;
+            camera.GetComponent<UI>().OpenUIPanel(this);
+            //Debug.Log("Sprite Clicked");
+        }
     }
-    private void updateMass()
+
+    private void UpdateVelocity()
     {
-        rb.mass = mass;
+        velocity.GetComponent<Vector>().SetVector2(rb.velocity);
     }
-    private void updateRadius()
-    {
-        transform.localScale = new Vector3(radius, radius, 1);
-    }
-    public void updateYGrav(float XGrav, float YGrav)
+    public void UpdateGrav(float XGrav, float YGrav)
     {
         Physics2D.gravity = new Vector2(XGrav, YGrav);
     }
-    GameObject instantiateVector(Vector2 vector, string description) 
+
+    GameObject InstantiateVector(Vector2 vector, string description) 
     {
+        GameObject v = (GameObject)Instantiate(this.vector, new Vector3(GetX(), GetY(), 1), Quaternion.identity);
+     
         float angle = Vector2.Angle(new Vector2(1, 0), vector);
-        GameObject v = (GameObject)Instantiate(this.vector, new Vector3(xPos, yPos, 1), Quaternion.identity);
-        //GameObject v = (GameObject)Instantiate(this.vector);
-        //v.transform.SetParent(ball.transform);
-        //Debug.Log(ball.transform.position.x - v.transform.position.x);
         v.transform.Rotate(0, 0, angle, Space.World);
-        v.GetComponent<Vector>().setVector2(vector);
-        v.GetComponent<Vector>().setObject(ball);
+        v.GetComponent<Vector>().SetVector2(vector);
+        v.GetComponent<Vector>().SetObject(ball);
         return v;
     }
 }
