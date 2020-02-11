@@ -35,7 +35,6 @@ public class UI : MonoBehaviour
 
     private Ball currentBall;
     private GameObject preball;
-    private float time;
     private List<GameObject> balls;
     private bool needBall;
     private bool isPaused;
@@ -51,7 +50,6 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = 0;
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
@@ -135,15 +133,7 @@ public class UI : MonoBehaviour
     //when Pause Button Is Clicked
     void Pause()
     {
-        
-        if (GameControl.IsPaused())
-        {
-            GameControl.Play();
-            pauseButton.GetComponentInChildren<Text>().text = "Pause";
-        }else{
-            GameControl.Pause();
-            pauseButton.GetComponentInChildren<Text>().text = "Play";
-        }
+        TimeControl.TogglePause();
 
         if (needBall)
         {
@@ -182,13 +172,18 @@ public class UI : MonoBehaviour
     }
 
      private void UpdateTime(){
-         time  += Time.deltaTime;
-         TimeDisplay.text = time.ToString();
+         TimeDisplay.text = TimeControl.GetTime().ToString();
+         
+         if(TimeControl.IsPaused())
+         {
+            pauseButton.GetComponentInChildren<Text>().text = "Play";
+         }
+         else
+         {
+            pauseButton.GetComponentInChildren<Text>().text = "Pause";
+         }
      }
     //getters
-    public float GetTime(){
-        return(time);
-    }
     public double GetCamHeight()
     {
         return (cameraHeight);
