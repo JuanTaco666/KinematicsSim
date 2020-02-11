@@ -54,4 +54,7 @@ public class TimeControl : MonoBehaviour
     public static float GetTime(){
         return time;
     }
+    public static void ResetTime(){
+        time = 0;
+    }
 }

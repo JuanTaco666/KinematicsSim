@@ -162,13 +162,14 @@ public class UI : MonoBehaviour
         XGravSlider.value = XGravValue;
         UpdateXGravText();
         HideUIPanel(false);
-        Pause();
+        TimeControl.Pause();
         foreach (GameObject ball in balls)
         {
             Destroy(ball);
         }
         balls.Clear();
         EventSystem.current.SetSelectedGameObject(null);
+        TimeControl.ResetTime();
     }
 
      private void UpdateTime(){

@@ -5410,6 +5410,16 @@ PrefabInstance:
       propertyPath: TimeDisplay
       value: 
       objectReference: {fileID: 2144052406}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: ballUIPanel
+      value: 
+      objectReference: {fileID: 970550562}
+    - target: {fileID: -1412943069408954521, guid: d395446040594b54dab7be05631f3e7b,
+        type: 3}
+      propertyPath: TopBarUIPanel
+      value: 
+      objectReference: {fileID: 1865286729}
     - target: {fileID: 531038126633199302, guid: d395446040594b54dab7be05631f3e7b,
         type: 3}
       propertyPath: m_Name
