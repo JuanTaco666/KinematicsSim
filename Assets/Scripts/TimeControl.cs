@@ -5,29 +5,35 @@ using UnityEngine;
 public class TimeControl : MonoBehaviour
 {
     private static bool isPaused = false;
-    public static float time = 0;
+    private static float time = 0;
+    public static float Time
+    {
+        get{
+            return time;
+        }
+    }
 
     void Start()
     {
-        Time.timeScale = 1;
+        UnityEngine.Time.timeScale = 1;
         isPaused = false;
     }
 
     void Update()
     {
-         time += Time.deltaTime;
+         time += UnityEngine.Time.deltaTime;
     }
 
     public static void TogglePause()
     {
         if (isPaused)
         {
-            Time.timeScale = 1;
+            UnityEngine.Time.timeScale = 1;
             isPaused = false;
         }
         else
         {
-            Time.timeScale = 0;
+            UnityEngine.Time.timeScale = 0;
             isPaused = true;
         }
 
@@ -35,13 +41,13 @@ public class TimeControl : MonoBehaviour
 
     public static void Play()
     {
-        Time.timeScale = 1;
+        UnityEngine.Time.timeScale = 1;
         isPaused = false;
     }
 
     public static void Pause()
     {
-        Time.timeScale = 0;
+        UnityEngine.Time.timeScale = 0;
         isPaused = true;
     }
 
@@ -51,9 +57,6 @@ public class TimeControl : MonoBehaviour
         return isPaused;
     }
 
-    public static float GetTime(){
-        return time;
-    }
     public static void ResetTime(){
         time = 0;
     }

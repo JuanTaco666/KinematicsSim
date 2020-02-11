@@ -173,7 +173,7 @@ public class UI : MonoBehaviour
     }
 
      private void UpdateTime(){
-         TimeDisplay.text = TimeControl.GetTime().ToString();
+         TimeDisplay.text = TimeControl.Time.ToString();
          
          if(TimeControl.IsPaused())
          {
