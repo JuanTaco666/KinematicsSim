@@ -15,7 +15,6 @@ public class Ball : MonoBehaviour
     private CircleCollider2D coll;
     private SpriteRenderer ballRender;
     private Color color;
-    private bool isPanelThere;
     private float mass;
     private float radius;
     private float elasticity;
@@ -24,7 +23,6 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isPanelThere = false;
    
         elasticity = 0.9f;
         friction = 0;
@@ -138,16 +136,10 @@ public class Ball : MonoBehaviour
     {
         if (camera == null)
             return;
-        if (camera.GetComponent<UI>().GetCurrentBall() == this && isPanelThere == true)
+        if (camera.GetComponent<UI>().GetCurrentBall() != this )
         {
-            camera.GetComponent<UI>().HideUIPanel(false);
-            isPanelThere = false;
-        }
-        else
-        {
-            isPanelThere = true;
             camera.GetComponent<UI>().OpenUIPanel(this);
-            //Debug.Log("Sprite Clicked");
+           // Debug.Log("Sprite Clicked");   
         }
     }
 

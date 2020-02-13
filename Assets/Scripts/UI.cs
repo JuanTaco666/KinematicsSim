@@ -22,6 +22,7 @@ public class UI : MonoBehaviour
 
     public Text TimeDisplay;
     public GameObject ballPanel;
+    public GameObject PlaceholderPanel;
     public InputField MassInput;
     public InputField XInput;
     public InputField YInput;
@@ -30,7 +31,6 @@ public class UI : MonoBehaviour
     public InputField FrictionInput;
     public InputField ForceXInput;
     public InputField ForceYInput;
-    public Button ColorButton;
     public GameObject ColorPicker;
 
     private Ball currentBall;
@@ -70,8 +70,6 @@ public class UI : MonoBehaviour
         btnP.onClick.AddListener(Pause);
         Button btnR = resetButton.GetComponent<Button>();
         btnR.onClick.AddListener(Reset);
-        Button btnC = ColorButton.GetComponent<Button>();
-        btnC.onClick.AddListener(ChangeColor);
 
         YGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
@@ -89,7 +87,7 @@ public class UI : MonoBehaviour
         ForceXInput.onEndEdit.AddListener(delegate { UpdateForce(); });
         ForceYInput.onEndEdit.AddListener(delegate { UpdateForce(); });
 
-        HideUIPanel(false);
+        HideUIPanel();
 
     }
 
@@ -161,13 +159,15 @@ public class UI : MonoBehaviour
         UpdateYGravText();
         XGravSlider.value = XGravValue;
         UpdateXGravText();
-        HideUIPanel(false);
+        //HideUIPanel(false);
         TimeControl.Pause();
         foreach (GameObject ball in balls)
         {
             Destroy(ball);
         }
         balls.Clear();
+        HideUIPanel();
+        ShowPlaceholderPanel();
         EventSystem.current.SetSelectedGameObject(null);
         TimeControl.ResetTime();
     }
@@ -199,8 +199,9 @@ public class UI : MonoBehaviour
     {
         if (!needBall)
         {
-            HideUIPanel(true);
-            HideUIColorPanel(false);
+            ballPanel.SetActive(true);
+        ColorPicker.SetActive(true);
+        isColorShown = true;
             currentBall = Ball;
             MassInput.text = (currentBall.GetComponent<Ball>().GetMass()).ToString();
             RadiusInput.text = (currentBall.GetComponent<Ball>().GetRadius()).ToString();
@@ -208,19 +209,27 @@ public class UI : MonoBehaviour
             ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
             XInput.text = (currentBall.GetComponent<Ball>().GetX()).ToString();
             YInput.text = (currentBall.GetComponent<Ball>().GetY()).ToString();
+            ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetComponent<Ball>().GetColor();
+            HidePlaceholderPanel();
         }
     }
     
-    public void HideUIPanel(bool isShown)
+    public void HideUIPanel()
     { 
-        ballPanel.SetActive(isShown);
+        ballPanel.SetActive(false);
+        ColorPicker.SetActive(false);
         isColorShown = false;
-        HideUIColorPanel(isShown);
+        
     }
-    private void HideUIColorPanel(bool isShown)
-    {
-        ColorPicker.SetActive(isShown);
+    private void ShowPlaceholderPanel()
+    { 
+        PlaceholderPanel.SetActive(true);
     }
+    private void HidePlaceholderPanel()
+    { 
+        PlaceholderPanel.SetActive(false);
+    }
+   
     private void UpdateMass()
     {
         currentBall.GetComponent<Ball>().SetMass(float.Parse(MassInput.text));
@@ -256,16 +265,8 @@ public class UI : MonoBehaviour
     {
 
     }
-    void ChangeColor()
-    {
-        isColorShown = !isColorShown;
-        HideUIColorPanel(isColorShown);
-        ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetComponent<Ball>().GetColor();
-        EventSystem.current.SetSelectedGameObject(null);
-    }
     private void UpdateColor()
-    {
-        
+    { 
         currentBall.GetComponent<Ball>().SetColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
     }
     public Ball GetCurrentBall()
