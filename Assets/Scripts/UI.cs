@@ -32,6 +32,7 @@ public class UI : MonoBehaviour
     public InputField ForceXInput;
     public InputField ForceYInput;
     public GameObject ColorPicker;
+    public GameObject DeleteBallButton;
 
     private Ball currentBall;
     private GameObject preball;
@@ -55,7 +56,7 @@ public class UI : MonoBehaviour
         camera.enabled = true;
         YGravValue = -9.81f;
         XGravValue = 0f;
-        Debug.Log(cameraHeight + "    " + cameraHeight);
+        Debug.Log(cameraWidth + "    " + cameraHeight);
 
 
 
@@ -70,6 +71,8 @@ public class UI : MonoBehaviour
         btnP.onClick.AddListener(Pause);
         Button btnR = resetButton.GetComponent<Button>();
         btnR.onClick.AddListener(Reset);
+        Button btnD = DeleteBallButton.GetComponent<Button>();
+        btnD.onClick.AddListener(DeleteBall);
 
         YGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
@@ -172,6 +175,20 @@ public class UI : MonoBehaviour
         TimeControl.ResetTime();
     }
 
+    void DeleteBall(){
+        Debug.Log(balls.IndexOf(currentBall.ball));
+        balls.Remove(currentBall.ball);
+       /*  foreach (GameObject ball in balls)
+        {
+            if(currentBall.GetComponent<Ball>() == ball.GetComponent<Ball>()){
+                Debug.Log(balls.IndexOf(ball));
+            }
+        }*/
+         Destroy(currentBall.ball);
+         HideUIPanel();
+         ShowPlaceholderPanel();
+    }
+
      private void UpdateTime(){
          TimeDisplay.text = TimeControl.Time.ToString();
          
@@ -184,6 +201,8 @@ public class UI : MonoBehaviour
             pauseButton.GetComponentInChildren<Text>().text = "Pause";
          }
      }
+
+
     //getters
     public double GetCamHeight()
     {
