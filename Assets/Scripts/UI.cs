@@ -31,6 +31,7 @@ public class UI : MonoBehaviour
     public InputField FrictionInput;
     public InputField ForceXInput;
     public InputField ForceYInput;
+    public InputField BallNameInput;
     public GameObject ColorPicker;
     public GameObject DeleteBallButton;
 
@@ -89,6 +90,7 @@ public class UI : MonoBehaviour
         YInput.onEndEdit.AddListener(delegate { UpdatePosition(); });
         ForceXInput.onEndEdit.AddListener(delegate { UpdateForce(); });
         ForceYInput.onEndEdit.AddListener(delegate { UpdateForce(); });
+        BallNameInput.onEndEdit.AddListener(delegate { UpdateName(); });
 
         HideUIPanel();
 
@@ -189,6 +191,9 @@ public class UI : MonoBehaviour
          ShowPlaceholderPanel();
     }
 
+    private void UpdateName(){
+
+    }
      private void UpdateTime(){
          TimeDisplay.text = TimeControl.Time.ToString();
          
