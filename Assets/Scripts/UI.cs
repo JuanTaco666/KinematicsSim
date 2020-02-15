@@ -14,6 +14,7 @@ public class UI : MonoBehaviour
     public GameObject preBall;
 
     //top ui panel
+    public Button timeResetButton;
     public Button pauseButton;
     public Button resetButton;
     public Button ballButton;
@@ -60,8 +61,6 @@ public class UI : MonoBehaviour
         camera.enabled = true;
         yGravValue = -9.81f;
         xGravValue = 0f;
-        Debug.Log(cameraWidth + "    " + cameraHeight);
-
 
 
         balls = new List<GameObject>();
@@ -73,6 +72,7 @@ public class UI : MonoBehaviour
         pauseButton.onClick.AddListener(Pause);
         resetButton.onClick.AddListener(Reset);
         deleteBallButton.onClick.AddListener(DeleteBall);
+        timeResetButton.onClick.AddListener(ResetTime);
 
         yGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
         yGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
@@ -189,6 +189,9 @@ public class UI : MonoBehaviour
         Destroy(currentBall.ball);
         HideUIPanel();
         ShowPlaceholderPanel();
+    }
+    void ResetTime(){
+        TimeControl.ResetTime();
     }
 
     private void UpdateName()
