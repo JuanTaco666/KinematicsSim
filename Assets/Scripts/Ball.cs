@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Ball : MonoBehaviour
 {
+
     public GameObject ball;
     public GameObject vector;
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
     public Camera camera;
+
+    private static int ballNum = 0;
 
     private GameObject force;
     private GameObject velocity;
@@ -29,8 +32,10 @@ public class Ball : MonoBehaviour
         mass = 1;
         radius = 5;
 
+        name = "ball " + ++ballNum;
+
         ballRender = GetComponent<SpriteRenderer>();
-        color = new Color(0, 1, 0, 1);
+        color = new Color(Random.Range(0.2f, 0.8f), Random.Range(0.2f, 0.8f), Random.Range(0.2f, 0.8f), 1);
         ballRender.color = color;
 
         velocity = InstantiateVector(rb.velocity, "velocity");
@@ -130,6 +135,7 @@ public class Ball : MonoBehaviour
         this.color = color;
         ballRender.color = color;
     }
+    
 
     //other methods
     void OnMouseDown()

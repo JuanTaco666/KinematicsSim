@@ -191,8 +191,9 @@ public class UI : MonoBehaviour
          ShowPlaceholderPanel();
     }
 
-    private void UpdateName(){
-
+    private void UpdateName()
+    {
+        currentBall.name = BallNameInput.text;
     }
      private void UpdateTime(){
          TimeDisplay.text = TimeControl.Time.ToString();
@@ -219,20 +220,23 @@ public class UI : MonoBehaviour
     }
 
     //-----------------------------------------------
-    public void OpenUIPanel(Ball Ball)
+    public void OpenUIPanel(Ball ball)
     {
         if (!needBall)
         {
             ballPanel.SetActive(true);
-        ColorPicker.SetActive(true);
-        isColorShown = true;
-            currentBall = Ball;
-            MassInput.text = (currentBall.GetComponent<Ball>().GetMass()).ToString();
-            RadiusInput.text = (currentBall.GetComponent<Ball>().GetRadius()).ToString();
-            FrictionInput.text = (currentBall.GetComponent<Ball>().GetFriction()).ToString();
-            ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
-            XInput.text = (currentBall.GetComponent<Ball>().GetX()).ToString();
-            YInput.text = (currentBall.GetComponent<Ball>().GetY()).ToString();
+            ColorPicker.SetActive(true);
+            isColorShown = true;
+            currentBall = ball;
+
+            MassInput.text = (currentBall.GetMass()).ToString();
+            RadiusInput.text = (currentBall.GetRadius()).ToString();
+            FrictionInput.text = (currentBall.GetFriction()).ToString();
+            ElasticityInput.text = (currentBall.GetElasticity()).ToString();
+            XInput.text = (currentBall.GetX()).ToString();
+            YInput.text = (currentBall.GetY()).ToString();
+            BallNameInput.text = currentBall.name;
+
             ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetComponent<Ball>().GetColor();
             HidePlaceholderPanel();
         }
