@@ -11,34 +11,32 @@ public class UI : MonoBehaviour
 
     //prefabs
     public GameObject ballPrefab;
-    public GameObject PreBall;
-
-    //buttons
-    public Button ballButton;
-    public Button pauseButton;
-    public Button resetButton;
-    public Button DeleteBallButton;
+    public GameObject preBall;
 
     //top ui panel
-    public InputField YGravText;
-    public InputField XGravText;
-    public Slider YGravSlider;
-    public Slider XGravSlider;
-    public Text TimeDisplay;
+    public Button pauseButton;
+    public Button resetButton;
+    public Button ballButton;
+    public Slider yGravSlider;
+    public Slider xGravSlider;
+    public InputField yGravText;
+    public InputField xGravText;
+    public Text timeDisplay;
 
     //side panel
     public GameObject ballPanel;
     public GameObject PlaceholderPanel;
-    public InputField MassInput;
-    public InputField XInput;
-    public InputField YInput;
-    public InputField RadiusInput;
-    public InputField ElasticityInput;
-    public InputField FrictionInput;
-    public InputField ForceXInput;
-    public InputField ForceYInput;
-    public InputField BallNameInput;
-    public GameObject ColorPicker;
+    public InputField ballNameInput;
+    public InputField xInput;
+    public InputField yInput;
+    public InputField massInput;
+    public InputField radiusInput;
+    public InputField elasticityInput;
+    public InputField frictionInput;
+    public InputField forceXInput;
+    public InputField forceYInput;
+    public Button deleteBallButton;
+    public GameObject colorPicker;
 
     private Ball currentBall;
     private GameObject preball;
@@ -48,11 +46,11 @@ public class UI : MonoBehaviour
     private bool isColorShown;
     private float cameraHeight;
     private float cameraWidth;
-    private float YGravValue;
-    private float XGravValue;
+    private float yGravValue;
+    private float xGravValue;
 
-    public float XScale;
-    public float YScale;
+    public float xScale;
+    public float yScale;
     
     // Start is called before the first frame update
     void Start()
@@ -60,8 +58,8 @@ public class UI : MonoBehaviour
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
-        YGravValue = -9.81f;
-        XGravValue = 0f;
+        yGravValue = -9.81f;
+        xGravValue = 0f;
         Debug.Log(cameraWidth + "    " + cameraHeight);
 
 
@@ -74,24 +72,24 @@ public class UI : MonoBehaviour
         ballButton.onClick.AddListener(creatingBalls);
         pauseButton.onClick.AddListener(Pause);
         resetButton.onClick.AddListener(Reset);
-        DeleteBallButton.onClick.AddListener(DeleteBall);
+        deleteBallButton.onClick.AddListener(DeleteBall);
 
-        YGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
-        YGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
+        yGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
+        yGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
         UpdateYGravText();
-        XGravSlider.onValueChanged.AddListener(delegate { UpdateXGravText(); });
-        XGravText.onEndEdit.AddListener(delegate { UpdateXGravSlider(); });
+        xGravSlider.onValueChanged.AddListener(delegate { UpdateXGravText(); });
+        xGravText.onEndEdit.AddListener(delegate { UpdateXGravSlider(); });
         UpdateXGravText();
 
-        MassInput.onEndEdit.AddListener(delegate { UpdateMass(); });
-        RadiusInput.onEndEdit.AddListener(delegate { UpdateRadius(); });
-        FrictionInput.onEndEdit.AddListener(delegate { UpdateFriction(); });
-        ElasticityInput.onEndEdit.AddListener(delegate { UpdateElasticity(); });
-        XInput.onEndEdit.AddListener(delegate { UpdatePosition(); });
-        YInput.onEndEdit.AddListener(delegate { UpdatePosition(); });
-        ForceXInput.onEndEdit.AddListener(delegate { UpdateForce(); });
-        ForceYInput.onEndEdit.AddListener(delegate { UpdateForce(); });
-        BallNameInput.onEndEdit.AddListener(delegate { UpdateName(); });
+        massInput.onEndEdit.AddListener(delegate { UpdateMass(); });
+        radiusInput.onEndEdit.AddListener(delegate { UpdateRadius(); });
+        frictionInput.onEndEdit.AddListener(delegate { UpdateFriction(); });
+        elasticityInput.onEndEdit.AddListener(delegate { UpdateElasticity(); });
+        xInput.onEndEdit.AddListener(delegate { UpdatePosition(); });
+        yInput.onEndEdit.AddListener(delegate { UpdatePosition(); });
+        forceXInput.onEndEdit.AddListener(delegate { UpdateForce(); });
+        forceYInput.onEndEdit.AddListener(delegate { UpdateForce(); });
+        ballNameInput.onEndEdit.AddListener(delegate { UpdateName(); });
 
         HideUIPanel();
 
@@ -150,8 +148,8 @@ public class UI : MonoBehaviour
     //when Reset Button Is Clicked
     void Reset()
     {
-        YGravValue = -9.81f;
-        XGravValue = 0f;
+        yGravValue = -9.81f;
+        xGravValue = 0f;
         if (needBall)
         {
             Destroy(balls[balls.Count - 1]);
@@ -161,9 +159,9 @@ public class UI : MonoBehaviour
         
         needBall = false;
         isPaused = false;
-        YGravSlider.value = YGravValue;
+        yGravSlider.value = yGravValue;
         UpdateYGravText();
-        XGravSlider.value = XGravValue;
+        xGravSlider.value = xGravValue;
         UpdateXGravText();
         //HideUIPanel(false);
         TimeControl.Pause();
@@ -195,10 +193,10 @@ public class UI : MonoBehaviour
 
     private void UpdateName()
     {
-        currentBall.name = BallNameInput.text;
+        currentBall.name = ballNameInput.text;
     }
      private void UpdateTime(){
-        TimeDisplay.text = TimeControl.Time.ToString();
+        timeDisplay.text = TimeControl.Time.ToString();
         
         if(TimeControl.IsPaused())
         {
@@ -227,19 +225,19 @@ public class UI : MonoBehaviour
         if (!needBall)
         {
             ballPanel.SetActive(true);
-            ColorPicker.SetActive(true);
+            colorPicker.SetActive(true);
             isColorShown = true;
             currentBall = ball;
 
-            MassInput.text = (currentBall.GetMass()).ToString();
-            RadiusInput.text = (currentBall.GetRadius()).ToString();
-            FrictionInput.text = (currentBall.GetFriction()).ToString();
-            ElasticityInput.text = (currentBall.GetElasticity()).ToString();
-            XInput.text = (currentBall.GetX()).ToString();
-            YInput.text = (currentBall.GetY()).ToString();
-            BallNameInput.text = currentBall.name;
+            massInput.text = (currentBall.GetMass()).ToString();
+            radiusInput.text = (currentBall.GetRadius()).ToString();
+            frictionInput.text = (currentBall.GetFriction()).ToString();
+            elasticityInput.text = (currentBall.GetElasticity()).ToString();
+            xInput.text = (currentBall.GetX()).ToString();
+            yInput.text = (currentBall.GetY()).ToString();
+            ballNameInput.text = currentBall.name;
 
-            ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetColor();
+            colorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetColor();
             HidePlaceholderPanel();
         }
     }
@@ -247,7 +245,7 @@ public class UI : MonoBehaviour
     public void HideUIPanel()
     { 
         ballPanel.SetActive(false);
-        ColorPicker.SetActive(false);
+        colorPicker.SetActive(false);
         isColorShown = false;
         
     }
@@ -262,34 +260,34 @@ public class UI : MonoBehaviour
    
     private void UpdateMass()
     {
-        currentBall.SetMass(float.Parse(MassInput.text));
-        MassInput.text = (currentBall.GetMass()).ToString();
+        currentBall.SetMass(float.Parse(massInput.text));
+        massInput.text = (currentBall.GetMass()).ToString();
     }
     private void UpdateRadius()
     {
-        currentBall.SetRadius(float.Parse(RadiusInput.text));
-        RadiusInput.text = (currentBall.GetRadius()).ToString();
+        currentBall.SetRadius(float.Parse(radiusInput.text));
+        radiusInput.text = (currentBall.GetRadius()).ToString();
     }
     private void UpdateFriction()
     {
-        currentBall.SetFriction(float.Parse(FrictionInput.text));
-        FrictionInput.text = (currentBall.GetFriction()).ToString();
+        currentBall.SetFriction(float.Parse(frictionInput.text));
+        frictionInput.text = (currentBall.GetFriction()).ToString();
     }
     private void UpdateElasticity()
     {
-        currentBall.SetElasticity(float.Parse(ElasticityInput.text));
+        currentBall.SetElasticity(float.Parse(elasticityInput.text));
         if (currentBall.GetElasticity() > 1){
             currentBall.SetElasticity(1);
         }else if (currentBall.GetElasticity() < 0){
             currentBall.SetElasticity(0);
         }
-        ElasticityInput.text = (currentBall.GetElasticity()).ToString();
+        elasticityInput.text = (currentBall.GetElasticity()).ToString();
     }
     private void UpdatePosition()
     {
-        currentBall.SetPosition(float.Parse(XInput.text),float.Parse(YInput.text));
-        XInput.text = (currentBall.GetX()).ToString();
-        YInput.text = (currentBall.GetY()).ToString();
+        currentBall.SetPosition(float.Parse(xInput.text),float.Parse(yInput.text));
+        xInput.text = (currentBall.GetX()).ToString();
+        yInput.text = (currentBall.GetY()).ToString();
     }
     private void UpdateForce()
     {
@@ -297,7 +295,7 @@ public class UI : MonoBehaviour
     }
     private void UpdateColor()
     { 
-        currentBall.SetColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
+        currentBall.SetColor(colorPicker.GetComponent<ColorPicker>().CurrentColor);
     }
     public Ball GetCurrentBall()
     {
@@ -307,42 +305,42 @@ public class UI : MonoBehaviour
     //-----------------------------------------------
     private void UpdateYGravSlider()
     {
-        YGravSlider.value = float.Parse(YGravText.text);
-        YGravValue = YGravSlider.value;
+        yGravSlider.value = float.Parse(yGravText.text);
+        yGravValue = yGravSlider.value;
         BallYGravUpdate();
 
     }
     private void UpdateYGravText()
     {
-        YGravText.text = YGravSlider.value.ToString();
-        YGravValue = float.Parse(YGravText.text);
+        yGravText.text = yGravSlider.value.ToString();
+        yGravValue = float.Parse(yGravText.text);
         BallYGravUpdate();
     }
     private void BallYGravUpdate()
     {
         foreach (GameObject ball in balls)
         {
-            ball.GetComponent<Ball>().UpdateGrav(XGravValue,YGravValue);
+            ball.GetComponent<Ball>().UpdateGrav(xGravValue,yGravValue);
         }
     }
     private void UpdateXGravSlider()
     {
-        XGravSlider.value = float.Parse(XGravText.text);
-        XGravValue = XGravSlider.value;
+        xGravSlider.value = float.Parse(xGravText.text);
+        xGravValue = xGravSlider.value;
         BallXGravUpdate();
 
     }
     private void UpdateXGravText()
     {
-        XGravText.text = XGravSlider.value.ToString();
-        XGravValue = float.Parse(XGravText.text);
+        xGravText.text = xGravSlider.value.ToString();
+        xGravValue = float.Parse(xGravText.text);
         BallXGravUpdate();
     }
     private void BallXGravUpdate()
     {
         foreach (GameObject ball in balls)
         {
-            ball.GetComponent<Ball>().UpdateGrav(XGravValue, YGravValue);
+            ball.GetComponent<Ball>().UpdateGrav(xGravValue, yGravValue);
         }
     }
 
@@ -357,7 +355,7 @@ public class UI : MonoBehaviour
     }
     private GameObject CreatePreBall(float x,float y)
     {
-        GameObject preball = Instantiate(PreBall);
+        GameObject preball = Instantiate(preBall);
         preball.transform.SetParent(camera.transform);
         preball.transform.position = new Vector3(x, y, 0);
         return preball;
