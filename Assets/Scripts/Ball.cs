@@ -158,7 +158,7 @@ public class Ball : MonoBehaviour
         Physics2D.gravity = new Vector2(XGrav, YGrav);
     }
 
-    GameObject InstantiateVector(Vector2 vector, string description) 
+    private GameObject InstantiateVector(Vector2 vector, string description) 
     {
         GameObject v = (GameObject)Instantiate(this.vector, new Vector3(GetX(), GetY(), 1), Quaternion.identity);
      

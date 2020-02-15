@@ -8,19 +8,25 @@ using UnityEngine.EventSystems;
 public class UI : MonoBehaviour
 {
     public Camera camera;
+
+    //prefabs
     public GameObject ballPrefab;
     public GameObject PreBall;
-    public Button ballButton;
 
+    //buttons
+    public Button ballButton;
     public Button pauseButton;
     public Button resetButton;
+    public Button DeleteBallButton;
 
+    //top ui panel
     public InputField YGravText;
     public InputField XGravText;
     public Slider YGravSlider;
     public Slider XGravSlider;
-
     public Text TimeDisplay;
+
+    //side panel
     public GameObject ballPanel;
     public GameObject PlaceholderPanel;
     public InputField MassInput;
@@ -33,7 +39,6 @@ public class UI : MonoBehaviour
     public InputField ForceYInput;
     public InputField BallNameInput;
     public GameObject ColorPicker;
-    public GameObject DeleteBallButton;
 
     private Ball currentBall;
     private GameObject preball;
@@ -45,9 +50,9 @@ public class UI : MonoBehaviour
     private float cameraWidth;
     private float YGravValue;
     private float XGravValue;
-    public float XScale;
 
-      public float YScale;
+    public float XScale;
+    public float YScale;
     
     // Start is called before the first frame update
     void Start()
@@ -66,14 +71,10 @@ public class UI : MonoBehaviour
         isPaused = false;
         isColorShown = false;
        
-        Button btnB = ballButton.GetComponent<Button>();
-        btnB.onClick.AddListener(creatingBalls);
-        Button btnP = pauseButton.GetComponent<Button>();
-        btnP.onClick.AddListener(Pause);
-        Button btnR = resetButton.GetComponent<Button>();
-        btnR.onClick.AddListener(Reset);
-        Button btnD = DeleteBallButton.GetComponent<Button>();
-        btnD.onClick.AddListener(DeleteBall);
+        ballButton.onClick.AddListener(creatingBalls);
+        pauseButton.onClick.AddListener(Pause);
+        resetButton.onClick.AddListener(Reset);
+        DeleteBallButton.onClick.AddListener(DeleteBall);
 
         YGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
         YGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
@@ -177,18 +178,19 @@ public class UI : MonoBehaviour
         TimeControl.ResetTime();
     }
 
-    void DeleteBall(){
+    void DeleteBall()
+    {
         Debug.Log(balls.IndexOf(currentBall.ball));
         balls.Remove(currentBall.ball);
        /*  foreach (GameObject ball in balls)
         {
-            if(currentBall.GetComponent<Ball>() == ball.GetComponent<Ball>()){
+            if(currentBall == ball.GetComponent<Ball>()){
                 Debug.Log(balls.IndexOf(ball));
             }
         }*/
-         Destroy(currentBall.ball);
-         HideUIPanel();
-         ShowPlaceholderPanel();
+        Destroy(currentBall.ball);
+        HideUIPanel();
+        ShowPlaceholderPanel();
     }
 
     private void UpdateName()
@@ -196,16 +198,16 @@ public class UI : MonoBehaviour
         currentBall.name = BallNameInput.text;
     }
      private void UpdateTime(){
-         TimeDisplay.text = TimeControl.Time.ToString();
-         
-         if(TimeControl.IsPaused())
-         {
-            pauseButton.GetComponentInChildren<Text>().text = "Play";
-         }
-         else
-         {
-            pauseButton.GetComponentInChildren<Text>().text = "Pause";
-         }
+        TimeDisplay.text = TimeControl.Time.ToString();
+        
+        if(TimeControl.IsPaused())
+        {
+           pauseButton.GetComponentInChildren<Text>().text = "Play";
+        }
+        else
+        {
+           pauseButton.GetComponentInChildren<Text>().text = "Pause";
+        }
      }
 
 
@@ -237,7 +239,7 @@ public class UI : MonoBehaviour
             YInput.text = (currentBall.GetY()).ToString();
             BallNameInput.text = currentBall.name;
 
-            ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetComponent<Ball>().GetColor();
+            ColorPicker.GetComponent<ColorPicker>().CurrentColor = currentBall.GetColor();
             HidePlaceholderPanel();
         }
     }
@@ -260,34 +262,34 @@ public class UI : MonoBehaviour
    
     private void UpdateMass()
     {
-        currentBall.GetComponent<Ball>().SetMass(float.Parse(MassInput.text));
-        MassInput.text = (currentBall.GetComponent<Ball>().GetMass()).ToString();
+        currentBall.SetMass(float.Parse(MassInput.text));
+        MassInput.text = (currentBall.GetMass()).ToString();
     }
     private void UpdateRadius()
     {
-        currentBall.GetComponent<Ball>().SetRadius(float.Parse(RadiusInput.text));
-        RadiusInput.text = (currentBall.GetComponent<Ball>().GetRadius()).ToString();
+        currentBall.SetRadius(float.Parse(RadiusInput.text));
+        RadiusInput.text = (currentBall.GetRadius()).ToString();
     }
     private void UpdateFriction()
     {
-        currentBall.GetComponent<Ball>().SetFriction(float.Parse(FrictionInput.text));
-        FrictionInput.text = (currentBall.GetComponent<Ball>().GetFriction()).ToString();
+        currentBall.SetFriction(float.Parse(FrictionInput.text));
+        FrictionInput.text = (currentBall.GetFriction()).ToString();
     }
     private void UpdateElasticity()
     {
-        currentBall.GetComponent<Ball>().SetElasticity(float.Parse(ElasticityInput.text));
-        if (currentBall.GetComponent<Ball>().GetElasticity() > 1){
-            currentBall.GetComponent<Ball>().SetElasticity(1);
-        }else if (currentBall.GetComponent<Ball>().GetElasticity() < 0){
-            currentBall.GetComponent<Ball>().SetElasticity(0);
+        currentBall.SetElasticity(float.Parse(ElasticityInput.text));
+        if (currentBall.GetElasticity() > 1){
+            currentBall.SetElasticity(1);
+        }else if (currentBall.GetElasticity() < 0){
+            currentBall.SetElasticity(0);
         }
-        ElasticityInput.text = (currentBall.GetComponent<Ball>().GetElasticity()).ToString();
+        ElasticityInput.text = (currentBall.GetElasticity()).ToString();
     }
     private void UpdatePosition()
     {
-          currentBall.GetComponent<Ball>().SetPosition(float.Parse(XInput.text),float.Parse(YInput.text));
-        XInput.text = (currentBall.GetComponent<Ball>().GetX()).ToString();
-         YInput.text = (currentBall.GetComponent<Ball>().GetY()).ToString();
+        currentBall.SetPosition(float.Parse(XInput.text),float.Parse(YInput.text));
+        XInput.text = (currentBall.GetX()).ToString();
+        YInput.text = (currentBall.GetY()).ToString();
     }
     private void UpdateForce()
     {
@@ -295,7 +297,7 @@ public class UI : MonoBehaviour
     }
     private void UpdateColor()
     { 
-        currentBall.GetComponent<Ball>().SetColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
+        currentBall.SetColor(ColorPicker.GetComponent<ColorPicker>().CurrentColor);
     }
     public Ball GetCurrentBall()
     {
