@@ -18,11 +18,14 @@ public class UI : MonoBehaviour
     public Button pauseButton;
     public Button resetButton;
     public Button ballButton;
+    public Button stopAfterTimeButton;
     public Slider yGravSlider;
     public Slider xGravSlider;
     public InputField yGravText;
     public InputField xGravText;
+    public InputField stopAfterTimeInput;
     public Text timeDisplay;
+    
 
     //side panel
     public GameObject ballPanel;
@@ -49,6 +52,7 @@ public class UI : MonoBehaviour
     private float cameraWidth;
     private float yGravValue;
     private float xGravValue;
+    private float stopTime;
 
     public float xScale;
     public float yScale;
@@ -59,6 +63,7 @@ public class UI : MonoBehaviour
         cameraHeight = camera.orthographicSize * 2;
         cameraWidth = camera.aspect * cameraHeight;
         camera.enabled = true;
+        stopTime = 0;
         yGravValue = -9.81f;
         xGravValue = 0f;
 
@@ -73,6 +78,7 @@ public class UI : MonoBehaviour
         resetButton.onClick.AddListener(Reset);
         deleteBallButton.onClick.AddListener(DeleteBall);
         timeResetButton.onClick.AddListener(ResetTime);
+        stopAfterTimeButton.onClick.AddListener(StopTimeButton);
 
         yGravSlider.onValueChanged.AddListener(delegate { UpdateYGravText(); });
         yGravText.onEndEdit.AddListener(delegate { UpdateYGravSlider(); });
@@ -80,6 +86,9 @@ public class UI : MonoBehaviour
         xGravSlider.onValueChanged.AddListener(delegate { UpdateXGravText(); });
         xGravText.onEndEdit.AddListener(delegate { UpdateXGravSlider(); });
         UpdateXGravText();
+        xGravText.onEndEdit.AddListener(delegate { UpdateXGravSlider(); });
+        UpdateXGravText();
+        stopAfterTimeInput.onEndEdit.AddListener(delegate { updateStopTime(); });
 
         massInput.onEndEdit.AddListener(delegate { UpdateMass(); });
         radiusInput.onEndEdit.AddListener(delegate { UpdateRadius(); });
@@ -193,7 +202,17 @@ public class UI : MonoBehaviour
     void ResetTime(){
         TimeControl.ResetTime();
     }
-
+   private void StopTimeButton(){
+    stopTime = 0;
+    updateStopTime();
+   }
+    private void updateStopTime(){
+        stopTime = float.Parse(stopAfterTimeInput.text);
+        if(stopTime == 0){
+             stopAfterTimeInput.text = null;
+             return;
+        }
+    }
     private void UpdateName()
     {
         currentBall.name = ballNameInput.text;
