@@ -73,7 +73,7 @@ public class UI : MonoBehaviour
         isPaused = false;
         isColorShown = false;
        
-        ballButton.onClick.AddListener(creatingBalls);
+        ballButton.onClick.AddListener(CreatingBalls);
         pauseButton.onClick.AddListener(Pause);
         resetButton.onClick.AddListener(Reset);
         deleteBallButton.onClick.AddListener(DeleteBall);
@@ -126,13 +126,17 @@ public class UI : MonoBehaviour
     }
 
     //when Ball Button Is Clicked
-    void creatingBalls()
+    void CreatingBalls()
     {
+
         needBall = !needBall;
         if (needBall)
         {
             preball = CreatePreBall(0, 0);
-        } else 
+            Util.RandomizeColor();
+            preball.GetComponent<SpriteRenderer>().color = Util.randomColor;
+        } 
+        else 
         {
             Destroy(balls[balls.Count - 1]);
             balls.RemoveAt(balls.Count - 1);
@@ -373,6 +377,10 @@ public class UI : MonoBehaviour
         ball.transform.SetParent(camera.transform);
         ball.transform.position = new Vector3(x, y, -9);
         ball.GetComponent<Ball>().camera = camera;
+
+        ball.GetComponent<Ball>().SetColor(Util.randomColor);
+        Util.RandomizeColor();
+        preball.GetComponent<SpriteRenderer>().color = Util.randomColor;
         return ball;
     }
     private GameObject CreatePreBall(float x,float y)

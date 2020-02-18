@@ -16,7 +16,6 @@ public class Ball : MonoBehaviour
     private GameObject force;
     private GameObject velocity;
     private CircleCollider2D coll;
-    private SpriteRenderer ballRender;
     private Color color;
     private float mass;
     private float radius;
@@ -33,11 +32,7 @@ public class Ball : MonoBehaviour
         radius = 5;
 
         name = "ball " + ++ballNum;
-
-        ballRender = GetComponent<SpriteRenderer>();
-        color = new Color(Random.Range(0.2f, 0.8f), Random.Range(0.2f, 0.8f), Random.Range(0.2f, 0.8f), 1);
-        ballRender.color = color;
-
+        
         velocity = InstantiateVector(rb.velocity, "velocity");
         force = InstantiateVector(new Vector2(0, 0), "force");
 
@@ -133,7 +128,7 @@ public class Ball : MonoBehaviour
     public void SetColor(Color color)
     {
         this.color = color;
-        ballRender.color = color;
+        GetComponent<SpriteRenderer>().color = color;
     }
     
 
