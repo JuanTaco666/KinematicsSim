@@ -53,6 +53,8 @@ public class UI : MonoBehaviour
     private float yGravValue;
     private float xGravValue;
     private float stopTime;
+    private bool gettingTime;
+    private float timeStopTime;
 
     public float xScale;
     public float yScale;
@@ -72,6 +74,8 @@ public class UI : MonoBehaviour
         needBall = false;
         isPaused = false;
         isColorShown = false;
+        gettingTime = true;
+        timeStopTime = 0;
        
         ballButton.onClick.AddListener(CreatingBalls);
         pauseButton.onClick.AddListener(Pause);
@@ -122,6 +126,7 @@ public class UI : MonoBehaviour
         {
             UpdateColor();
         }
+        StopTimeImplement();
         
     }
 
@@ -193,12 +198,6 @@ public class UI : MonoBehaviour
     {
         Debug.Log(balls.IndexOf(currentBall.ball));
         balls.Remove(currentBall.ball);
-       /*  foreach (GameObject ball in balls)
-        {
-            if(currentBall == ball.GetComponent<Ball>()){
-                Debug.Log(balls.IndexOf(ball));
-            }
-        }*/
         Destroy(currentBall.ball);
         HideUIPanel();
         ShowPlaceholderPanel();
@@ -206,15 +205,31 @@ public class UI : MonoBehaviour
     void ResetTime(){
         TimeControl.ResetTime();
     }
-   private void StopTimeButton(){
-    stopTime = 0;
-    updateStopTime();
-   }
+    private void StopTimeButton(){
+        stopAfterTimeInput.text = null;
+        stopTime = 0;
+    }
     private void updateStopTime(){
         stopTime = float.Parse(stopAfterTimeInput.text);
+        //Debug.Log("this is stoptime: " + stopTime);
         if(stopTime == 0){
-             stopAfterTimeInput.text = null;
-             return;
+            stopAfterTimeInput.text = null;
+            return;
+        }
+    }
+    private void StopTimeImplement(){
+        if (stopTime != 0){
+            if(gettingTime){
+                gettingTime = false;
+                timeStopTime = TimeControl.Time;
+            } else {
+                if(TimeControl.Time >= (timeStopTime + stopTime)){
+                    TimeControl.Time = (timeStopTime + stopTime);
+                    StopTimeButton();
+                    gettingTime = true;
+                    Pause();
+                }
+            }
         }
     }
     private void UpdateName()
