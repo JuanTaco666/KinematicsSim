@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Ball : MonoBehaviour
 {
+
     public GameObject ball;
     public GameObject vector;
     public Rigidbody2D rb;
     public PhysicsMaterial2D ballMaterial;
     public Camera camera;
 
+    private static int ballNum = 0;
+
     private GameObject force;
     private GameObject velocity;
     private CircleCollider2D coll;
-    private SpriteRenderer ballRender;
     private Color color;
-    private bool isPanelThere;
     private float mass;
     private float radius;
     private float elasticity;
@@ -24,17 +25,14 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isPanelThere = false;
    
         elasticity = 0.9f;
         friction = 0;
         mass = 1;
         radius = 5;
 
-        ballRender = GetComponent<SpriteRenderer>();
-        color = new Color(0, 1, 0, 1);
-        ballRender.color = color;
-
+        name = "ball " + ++ballNum;
+        
         velocity = InstantiateVector(rb.velocity, "velocity");
         force = InstantiateVector(new Vector2(0, 0), "force");
 
@@ -130,24 +128,19 @@ public class Ball : MonoBehaviour
     public void SetColor(Color color)
     {
         this.color = color;
-        ballRender.color = color;
+        GetComponent<SpriteRenderer>().color = color;
     }
+    
 
     //other methods
     void OnMouseDown()
     {
         if (camera == null)
             return;
-        if (camera.GetComponent<UI>().GetCurrentBall() == this && isPanelThere == true)
+        if (camera.GetComponent<UI>().GetCurrentBall() != this )
         {
-            camera.GetComponent<UI>().HideUIPanel(false);
-            isPanelThere = false;
-        }
-        else
-        {
-            isPanelThere = true;
             camera.GetComponent<UI>().OpenUIPanel(this);
-            //Debug.Log("Sprite Clicked");
+           // Debug.Log("Sprite Clicked");   
         }
     }
 
@@ -160,7 +153,7 @@ public class Ball : MonoBehaviour
         Physics2D.gravity = new Vector2(XGrav, YGrav);
     }
 
-    GameObject InstantiateVector(Vector2 vector, string description) 
+    private GameObject InstantiateVector(Vector2 vector, string description) 
     {
         GameObject v = (GameObject)Instantiate(this.vector, new Vector3(GetX(), GetY(), 1), Quaternion.identity);
      
