@@ -16,6 +16,7 @@ public class Ball : MonoBehaviour
     private GameObject force;
     private GameObject velocity;
     private CircleCollider2D coll;
+    private float scaleFactor;
     private Color color;
     private float mass;
     private float radius;
@@ -25,7 +26,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-   
+        scaleFactor = 1;
         elasticity = 0.9f;
         friction = 0;
         mass = 1;
