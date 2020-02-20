@@ -26,11 +26,11 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scaleFactor = 1;
-        elasticity = 0.9f;
+        scaleFactor = 3.68f;
+        elasticity = 1f;
         friction = 0;
         mass = 1;
-        radius = 5;
+        radius = 1;
 
         name = "ball " + ++ballNum;
         
@@ -39,6 +39,7 @@ public class Ball : MonoBehaviour
 
         coll = GetComponent<CircleCollider2D>();
         MakeMaterial(elasticity,friction);
+        SetRadius(radius);
         
     }
 
@@ -71,7 +72,7 @@ public class Ball : MonoBehaviour
     }
     public float GetRadius()
     {
-        return (radius);
+        return (radius/scaleFactor);
     }
     public float GetElasticity()
     {
@@ -115,8 +116,8 @@ public class Ball : MonoBehaviour
     }
     public void SetRadius(float radius)
     {
-        this.radius = radius;
-        transform.localScale = new Vector3(radius, radius, 1);
+        this.radius = radius * scaleFactor;
+        transform.localScale = new Vector3(this.radius, this.radius, 1);
     }
     public void SetVelocity(GameObject velocity)
     {
