@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 07d9e21446c61d2469641e50103ce30d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - camera: {instanceID: 0}
+  - ballPrefab: {fileID: 4683678037334544934, guid: d162c966d80c63340a94889d73a9e06f,
+      type: 3}
+  - PreBall: {fileID: 4905378957471188882, guid: d2f07ba893f71f74d9635817079026bb,
+      type: 3}
+  - ballButton: {instanceID: 0}
+  - pauseButton: {instanceID: 0}
+  - resetButton: {instanceID: 0}
+  - YGravText: {instanceID: 0}
+  - XGravText: {instanceID: 0}
+  - YGravSlider: {instanceID: 0}
+  - XGravSlider: {instanceID: 0}
+  - TimeDisplay: {instanceID: 0}
+  - ballPanel: {instanceID: 0}
+  - PlaceholderPanel: {instanceID: 0}
+  - MassInput: {instanceID: 0}
+  - XInput: {instanceID: 0}
+  - YInput: {instanceID: 0}
+  - RadiusInput: {instanceID: 0}
+  - ElasticityInput: {instanceID: 0}
+  - FrictionInput: {instanceID: 0}
+  - ForceXInput: {instanceID: 0}
+  - ForceYInput: {instanceID: 0}
+  - ColorPicker: {instanceID: 0}
+  - DeleteBallButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

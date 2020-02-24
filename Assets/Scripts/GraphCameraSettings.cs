@@ -23,11 +23,11 @@ public class GraphCameraSettings : MonoBehaviour
     }
 
     //getters
-    public double getCamHeight()
+    public double GetCamHeight()
     {
         return (cameraHeight);
     }
-    public double getCamWidth()
+    public double GetCamWidth()
     {
         return (cameraWidth);
     }

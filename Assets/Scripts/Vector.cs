@@ -25,36 +25,36 @@ public class Vector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        vector.transform.rotation = Quaternion.Euler(0, 0, getAngle());
+        vector.transform.rotation = Quaternion.Euler(0, 0, GetAngle());
         vector.transform.localScale = new Vector3(vectorValue.magnitude * xScaleFactor, yScale, 0);
     }
 
-    public void add(Vector2 v)
+    public void Add(Vector2 v)
     {
         vectorValue += v;
     }
 
-    public float getAngle()
+    public float GetAngle()
     {
         float angle = (float)(Math.Atan2(vectorValue.y, vectorValue.x) / Math.PI * 180); ;
 
         return angle;
     }
 
-    public float getMagintude()
+    public float GetMagintude()
     {
         return vectorValue.magnitude;
     }
 
-    public void setColor(Color color)
+    public void SetColor(Color color)
     {
         spriteRenderer.color = color;
     }
-    public void setVector2(Vector2 vector)
+    public void SetVector2(Vector2 vector)
     {
         vectorValue = vector;
     }
-    public void setObject(GameObject gObject)
+    public void SetObject(GameObject gObject)
     {
         vector.transform.parent = gObject.transform;
         this.parentObject = gObject;

@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4683678037334544934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.21, y: 1.94, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: -3.5, y: 2.007, z: 0}
+  m_LocalScale: {x: 5.4745, y: 5.5205, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,9 +96,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.00037961281, y: 0.000015347885}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.09039303
 --- !u!114 &7637701421610886538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   vector: {fileID: 2339244536730963515, guid: 17d8538e5531b4c4a8a53a3d66248008, type: 3}
   rb: {fileID: 7548577272009900155}
   ballMaterial: {fileID: 6200000, guid: 80975b74890ed3f47aa74f0e5181699b, type: 2}
+  camera: {fileID: 0}
 --- !u!50 &7548577272009900155
 Rigidbody2D:
   serializedVersion: 4
