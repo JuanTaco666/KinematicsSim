@@ -42,6 +42,7 @@ public class UI : MonoBehaviour
     public Button deleteBallButton;
     public GameObject colorPicker;
 
+
     private Ball currentBall;
     private GameObject preball;
     private List<GameObject> balls;
@@ -68,6 +69,8 @@ public class UI : MonoBehaviour
         stopTime = 0;
         yGravValue = -9.81f;
         xGravValue = 0f;
+        forceXInput.text = 0f.ToString();
+        forceYInput.text = 0f.ToString();
 
 
         balls = new List<GameObject>();
@@ -332,7 +335,10 @@ public class UI : MonoBehaviour
     }
     private void UpdateForce()
     {
-
+        Vector2 force = new Vector2(float.Parse(forceXInput.text),float.Parse(forceYInput.text));
+        currentBall.SetForce(force);
+        //forceXInput.text = 0f.ToString();
+        //forceYInput.text = 0f.ToString();
     }
     private void UpdateColor()
     { 

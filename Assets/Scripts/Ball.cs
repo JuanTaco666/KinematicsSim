@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour
 
     private static int ballNum = 0;
 
+    private List<GameObject> forces;
     private GameObject force;
     private GameObject velocity;
     private CircleCollider2D coll;
@@ -27,10 +28,12 @@ public class Ball : MonoBehaviour
     void Start()
     {
         scaleFactor = 3.68f;
-        elasticity = 1f;
+        elasticity = 0.9f;
         friction = 0;
         mass = 1;
         radius = 1;
+
+        forces = new List<GameObject>();
 
         name = "ball " + ++ballNum;
         
@@ -123,9 +126,16 @@ public class Ball : MonoBehaviour
     {
         this.velocity = velocity;
     }
-    public void SetForce(GameObject force)
+    public void SetForce(Vector2 force)
     {
-        this.force = force;
+        GameObject Force = InstantiateVector(force, "force");
+        forces.Add(Force);
+        if(forces.Count > 1){
+            Destroy(forces[0]);
+            forces.RemoveAt(0);
+        }
+        this.force = Force;
+        rb.AddForce(force);
     }
     public void SetColor(Color color)
     {
