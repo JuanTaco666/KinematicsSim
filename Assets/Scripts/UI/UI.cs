@@ -12,6 +12,7 @@ public class UI : MonoBehaviour
     //prefabs
     public GameObject ballPrefab;
     public GameObject preBall;
+    public GameObject subWindowPrefab;
 
     //top ui panel
     public Button timeResetButton;
@@ -105,6 +106,8 @@ public class UI : MonoBehaviour
         ballNameInput.onEndEdit.AddListener(delegate { UpdateName(); });
 
         HideUIPanel();
+
+        CreateSubWindow("test");
 
     }
 
@@ -404,6 +407,17 @@ public class UI : MonoBehaviour
         preball.transform.SetParent(camera.transform);
         preball.transform.position = new Vector3(x, y, 0);
         return preball;
+    }
+    public GameObject CreateSubWindow(string title){
+
+        GameObject subWindow = Instantiate(subWindowPrefab, transform.GetChild(0).gameObject.transform);
+
+        GameObject titleBar = subWindow.transform.GetChild(0).gameObject;
+        GameObject titleText = titleBar.transform.GetChild(0).gameObject;
+        titleText.GetComponent<UnityEngine.UI.Text>().text = title;
+
+        return subWindow;
+
     }
 
 }
