@@ -9,12 +9,12 @@ public class UI : MonoBehaviour
 {
     public Camera camera;
 
-    //prefabs
+    [Header("Prefabs")]
     public GameObject ballPrefab;
     public GameObject preBall;
     public GameObject subWindowPrefab;
 
-    //top ui panel
+    [Header("top ui panel")]
     public Button timeResetButton;
     public Button pauseButton;
     public Button resetButton;
@@ -27,8 +27,7 @@ public class UI : MonoBehaviour
     public InputField stopAfterTimeInput;
     public Text timeDisplay;
     
-
-    //side panel
+    [Header("side panel")]
     public GameObject ballPanel;
     public GameObject PlaceholderPanel;
     public InputField ballNameInput;
