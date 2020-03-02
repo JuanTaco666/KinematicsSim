@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Title : MonoBehaviour, IDragHandler
 {
 
+    public Text title;
     public Button close;
 
     [SerializeField] private RectTransform dragRectTransform;

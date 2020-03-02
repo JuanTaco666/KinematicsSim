@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 7590651392780787252}
   - component: {fileID: 7590651392780787210}
   - component: {fileID: 7590651392780787211}
+  - component: {fileID: 4922790200681140528}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -151,6 +152,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4922790200681140528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590651392780787253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779967638312fdb4eb818379ceba0afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 5604081074065601559}
 --- !u!1 &7590651393331901670
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9eb09bb99d8e54e9043c07e2875db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: {fileID: 7590651393331901668}
   close: {fileID: 432205977293067230}
   dragRectTransform: {fileID: 0}
   canvas: {fileID: 0}
@@ -332,7 +347,7 @@ GameObject:
   - component: {fileID: 4130606246877203621}
   - component: {fileID: 432205977293067230}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
