@@ -8,12 +8,15 @@ using UnityEngine.EventSystems;
 public class UI : MonoBehaviour
 {
     public Camera camera;
+    public Canvas canvas;
 
-    //prefabs
+    [Header("Prefabs")]
     public GameObject ballPrefab;
     public GameObject preBall;
+    public GameObject subWindowPrefab;
+    public GameObject subWindowButtonPrefab;
 
-    //top ui panel
+    [Header("top ui panel")]
     public Button timeResetButton;
     public Button pauseButton;
     public Button resetButton;
@@ -26,8 +29,7 @@ public class UI : MonoBehaviour
     public InputField stopAfterTimeInput;
     public Text timeDisplay;
     
-
-    //side panel
+    [Header("side panel")]
     public GameObject ballPanel;
     public GameObject PlaceholderPanel;
     public InputField ballNameInput;
@@ -53,6 +55,8 @@ public class UI : MonoBehaviour
     private float yGravValue;
     private float xGravValue;
     private float stopTime;
+    private bool gettingTime;
+    private float timeStopTime;
 
     public float xScale;
     public float yScale;
@@ -72,7 +76,23 @@ public class UI : MonoBehaviour
         needBall = false;
         isPaused = false;
         isColorShown = false;
-       
+        gettingTime = true;
+        timeStopTime = 0;
+
+        {//test code
+        MainPanel testPanel = Instantiate(subWindowPrefab, canvas.transform).GetComponent<MainPanel>();
+        testPanel.SetName("Superfantastic");
+        
+        SubWindowButton testButton = Instantiate(subWindowButtonPrefab, testPanel.gameObject.transform).GetComponent<SubWindowButton>();
+        testButton.AddListener(delegate 
+            {
+                Debug.Log("Hello world");
+            });
+        testPanel.AddComponent(testButton);
+
+        CreateSubWindow("test");
+        }
+
         ballButton.onClick.AddListener(CreatingBalls);
         pauseButton.onClick.AddListener(Pause);
         resetButton.onClick.AddListener(Reset);
@@ -122,6 +142,7 @@ public class UI : MonoBehaviour
         {
             UpdateColor();
         }
+        StopTimeImplement();
         
     }
 
@@ -193,12 +214,6 @@ public class UI : MonoBehaviour
     {
         Debug.Log(balls.IndexOf(currentBall.ball));
         balls.Remove(currentBall.ball);
-       /*  foreach (GameObject ball in balls)
-        {
-            if(currentBall == ball.GetComponent<Ball>()){
-                Debug.Log(balls.IndexOf(ball));
-            }
-        }*/
         Destroy(currentBall.ball);
         HideUIPanel();
         ShowPlaceholderPanel();
@@ -206,15 +221,31 @@ public class UI : MonoBehaviour
     void ResetTime(){
         TimeControl.ResetTime();
     }
-   private void StopTimeButton(){
-    stopTime = 0;
-    updateStopTime();
-   }
+    private void StopTimeButton(){
+        stopAfterTimeInput.text = null;
+        stopTime = 0;
+    }
     private void updateStopTime(){
         stopTime = float.Parse(stopAfterTimeInput.text);
+        //Debug.Log("this is stoptime: " + stopTime);
         if(stopTime == 0){
-             stopAfterTimeInput.text = null;
-             return;
+            stopAfterTimeInput.text = null;
+            return;
+        }
+    }
+    private void StopTimeImplement(){
+        if (stopTime != 0){
+            if(gettingTime){
+                gettingTime = false;
+                timeStopTime = TimeControl.Time;
+            } else {
+                if(TimeControl.Time >= (timeStopTime + stopTime)){
+                    TimeControl.Time = (timeStopTime + stopTime);
+                    StopTimeButton();
+                    gettingTime = true;
+                    Pause();
+                }
+            }
         }
     }
     private void UpdateName()
@@ -389,6 +420,18 @@ public class UI : MonoBehaviour
         preball.transform.SetParent(camera.transform);
         preball.transform.position = new Vector3(x, y, 0);
         return preball;
+    }
+    public GameObject CreateSubWindow(string title){
+
+        GameObject subWindow = Instantiate(subWindowPrefab, canvas.transform);
+        subWindow.name = title;
+
+        GameObject titleBar = subWindow.transform.GetChild(0).gameObject;
+        GameObject titleText = titleBar.transform.GetChild(0).gameObject;
+        titleText.GetComponent<UnityEngine.UI.Text>().text = title;
+
+        return subWindow;
+
     }
 
 }

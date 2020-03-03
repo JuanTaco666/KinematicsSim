@@ -8,6 +8,10 @@ public class TimeControl : MonoBehaviour
     private static float time = 0;
     public static float Time
     {
+        set
+        {
+            time = value;
+        }
         get{
             return time;
         }
