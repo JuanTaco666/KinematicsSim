@@ -30,7 +30,7 @@ public class MainPanel : MonoBehaviour
         
     }
 
-    void SetName(string name)
+    public void SetName(string name)
     {
         this.name = name;
         title.title.text = name;

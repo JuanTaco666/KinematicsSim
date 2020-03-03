@@ -8,11 +8,13 @@ using UnityEngine.EventSystems;
 public class UI : MonoBehaviour
 {
     public Camera camera;
+    public Canvas canvas;
 
     [Header("Prefabs")]
     public GameObject ballPrefab;
     public GameObject preBall;
     public GameObject subWindowPrefab;
+    public GameObject subWindowButtonPrefab;
 
     [Header("top ui panel")]
     public Button timeResetButton;
@@ -76,7 +78,21 @@ public class UI : MonoBehaviour
         isColorShown = false;
         gettingTime = true;
         timeStopTime = 0;
-       
+
+        {//test code
+        MainPanel testPanel = Instantiate(subWindowPrefab, canvas.transform).GetComponent<MainPanel>();
+        testPanel.SetName("Superfantastic");
+        
+        SubWindowButton testButton = Instantiate(subWindowButtonPrefab, testPanel.gameObject.transform).GetComponent<SubWindowButton>();
+        testButton.AddListener(delegate 
+            {
+                Debug.Log("Hello world");
+            });
+        testPanel.AddComponent(testButton);
+
+        CreateSubWindow("test");
+        }
+
         ballButton.onClick.AddListener(CreatingBalls);
         pauseButton.onClick.AddListener(Pause);
         resetButton.onClick.AddListener(Reset);
@@ -105,8 +121,6 @@ public class UI : MonoBehaviour
         ballNameInput.onEndEdit.AddListener(delegate { UpdateName(); });
 
         HideUIPanel();
-
-        CreateSubWindow("test");
 
     }
 
@@ -409,7 +423,8 @@ public class UI : MonoBehaviour
     }
     public GameObject CreateSubWindow(string title){
 
-        GameObject subWindow = Instantiate(subWindowPrefab, transform.GetChild(0).gameObject.transform);
+        GameObject subWindow = Instantiate(subWindowPrefab, canvas.transform);
+        subWindow.name = title;
 
         GameObject titleBar = subWindow.transform.GetChild(0).gameObject;
         GameObject titleText = titleBar.transform.GetChild(0).gameObject;
