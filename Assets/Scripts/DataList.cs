@@ -6,10 +6,10 @@ public class DataList
 {
     public class Data{
 
-        public readonly Vector2 data;
+        public readonly float data;
         public readonly float time;
 
-        public Data(Vector2 data, float time)
+        public Data(float data, float time)
         {
             this.data = data;
             this.time = time;
@@ -17,28 +17,30 @@ public class DataList
 
     }
 
-    List<Data> datas;
+    public List<Data> datas;
+    public string name;
 
-    public DataList()
+    public DataList(string name)
     {
         datas = new List<Data>();
+        this.name = name;
     }
 
     public void Add(Vector2 data)
     {
-        datas.Add(new Data(data + new Vector2(0, 0), TimeControl.Time));
+        datas.Add(new Data(data.magnitude, TimeControl.Time));    
     }
 
     public void Add(float data)
     {
-        datas.Add(new Data(new Vector2(data, 0), TimeControl.Time));    
+        datas.Add(new Data(data, TimeControl.Time));    
     }
 
-    public Vector2 InstantaneousChange(int index)
+    public float InstantaneousChange(int index)
     {
         if(index < 0 || index >= datas.Count)
         {
-            return new Vector2(0, 0);
+            return 0;
         }
         
         Data data1 = Get((index == 0) ? 0 : index - 1);
