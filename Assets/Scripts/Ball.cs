@@ -17,6 +17,7 @@ public class Ball : MonoBehaviour
     private GameObject velocity;
     private CircleCollider2D coll;
     private Color color;
+    public DataList yPosData;
     private float mass;
     private float radius;
     private float elasticity;
@@ -38,6 +39,8 @@ public class Ball : MonoBehaviour
 
         coll = GetComponent<CircleCollider2D>();
         MakeMaterial(elasticity,friction);
+
+        yPosData = new DataList(name + " y");
         
     }
 
@@ -45,6 +48,7 @@ public class Ball : MonoBehaviour
     void Update()
     {
         UpdateVelocity();
+        yPosData.Add(GetY());
     }
 
     private void MakeMaterial(float elasticity,float friction)

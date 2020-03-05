@@ -15,6 +15,8 @@ public class UI : MonoBehaviour
     public GameObject preBall;
     public GameObject subWindowPrefab;
     public GameObject subWindowButtonPrefab;
+    public GameObject chartPrefab;
+    public GameObject graphPrefab;
 
     [Header("top ui panel")]
     public Button timeResetButton;
@@ -81,16 +83,28 @@ public class UI : MonoBehaviour
 
         {//test code
         MainPanel testPanel = Instantiate(subWindowPrefab, canvas.transform).GetComponent<MainPanel>();
-        testPanel.SetName("Superfantastic");
+        testPanel.SetName("test");
+
+        // Chart chartTest = Instantiate(chartPrefab, testPanel.gameObject.transform).GetComponent<Chart>();
         
         SubWindowButton testButton = Instantiate(subWindowButtonPrefab, testPanel.gameObject.transform).GetComponent<SubWindowButton>();
         testButton.AddListener(delegate 
             {
-                Debug.Log("Hello world");
-            });
-        testPanel.AddComponent(testButton);
+                // Debug.Log("Hello world");
+                // chartTest.AddData(currentBall.yPosData);
+                
+                MainPanel graphPanel = Instantiate(subWindowPrefab, canvas.transform).GetComponent<MainPanel>();
+                graphPanel.SetName("graph test");
 
-        CreateSubWindow("test");
+                Graph graph = Instantiate(graphPrefab, graphPanel.transform).GetComponent<Graph>();
+                graph.SetData(currentBall.yPosData);
+                graphPanel.AddComponent(graph);
+            });
+
+        testPanel.AddComponent(testButton);
+        // testPanel.AddComponent(chartTest);
+
+        // CreateSubWindow("test");
         }
 
         ballButton.onClick.AddListener(CreatingBalls);
