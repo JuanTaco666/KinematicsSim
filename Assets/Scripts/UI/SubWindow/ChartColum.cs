@@ -21,7 +21,7 @@ public class ChartColum : MonoBehaviour
         {
             GameObject row = Instantiate(rowPrefab, transform);
             RectTransform rowRt = row.GetComponent<RectTransform>();
-            rowRt.offsetMax = new Vector2(2, rowRt.offsetMax.y);
+            rowRt.offsetMax = new Vector2(-2, rowRt.offsetMax.y);
             rowRt.anchoredPosition = new Vector2(rowRt.anchoredPosition.x, yPos);
             yPos -= 16;
 
