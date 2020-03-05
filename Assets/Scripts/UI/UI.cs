@@ -96,7 +96,7 @@ public class UI : MonoBehaviour
                 MainPanel graphPanel = Instantiate(subWindowPrefab, canvas.transform).GetComponent<MainPanel>();
                 graphPanel.SetName("graph test");
 
-                Graph graph = Instantiate(graphPrefab, canvas.transform).GetComponent<Graph>();
+                Graph graph = Instantiate(graphPrefab, graphPanel.transform).GetComponent<Graph>();
                 graph.SetData(currentBall.yPosData);
                 graphPanel.AddComponent(graph);
             });

@@ -6,14 +6,37 @@ using UnityEngine.UI;
 public class Graph : SubWindowComponent
 {
     public Sprite dotSprite;
+    public Text horizontalTemplate;
+    public Text verticalTemplate;
     public GameObject graphContent;
+
     private List<GameObject> dots;
     private DataList datas;
 
     [SerializeField] private int xScale = 100;
-    [SerializeField] private int yScale = 20;
+    [SerializeField] private int yScale = 30;
+    
+    void Start()
+    {
+        Debug.Log(rectTransform.sizeDelta.x);
+        for(int xPos = 30; xPos <= rectTransform.rect.width; xPos += xScale)
+        {
+            Text label = Instantiate(horizontalTemplate, transform);
+            label.gameObject.SetActive(true);
+            label.text = "" + (xPos - 30) / xScale;
+            label.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, 10);
+        }
 
-    // Update is called once per frame
+        Debug.Log(rectTransform.sizeDelta.y);
+        for(int yPos = 20; yPos <= rectTransform.rect.height - 15; yPos += yScale)
+        {
+            Text label = Instantiate(verticalTemplate, transform);
+            label.gameObject.SetActive(true);
+            label.text = "" + (yPos - 20) / yScale;
+            label.GetComponent<RectTransform>().anchoredPosition = new Vector2(15, yPos + 7.5f);
+        }
+    }
+
     void Update()
     {
         for(int i = dots.Count; i < datas.datas.Count; i++)
